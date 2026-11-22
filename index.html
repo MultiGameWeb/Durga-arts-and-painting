@@ -578,120 +578,324 @@
     if (!ctx) return;
 
     let w = 0, h = 0, elapsed = 0, last = 0, raf = 0, inView = true;
-    const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const clamp = value => Math.max(0, Math.min(1, value));
-    const ease = value => 1 - Math.pow(1 - value, 3);
+    const reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const clamp = value => Math.max(0,Math.min(1,value));
+    const ease = value => 1-Math.pow(1-value,3);
+    const mix = (a,b,p) => a+(b-a)*p;
 
     function resize(){
       const rect = host.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      w = Math.max(1, rect.width);
-      h = Math.max(1, rect.height);
-      canvas.width = Math.round(w * dpr);
-      canvas.height = Math.round(h * dpr);
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      drawFrame(reduceMotion ? 10.7 : elapsed);
+      const dpr = Math.min(window.devicePixelRatio || 1,2);
+      w = Math.max(1,rect.width);
+      h = Math.max(1,rect.height);
+      canvas.width = Math.round(w*dpr);
+      canvas.height = Math.round(h*dpr);
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+      drawFrame(reducedMotion ? 10.8 : elapsed);
     }
 
-    function bezier(p0,p1,p2,p3,p,lw,col){
-      if (p <= 0) return;
+    function cubicPoint(a,b,c,d,p){
+      const u=1-p;
+      return {
+        x:u*u*u*a.x+3*u*u*p*b.x+3*u*p*p*c.x+p*p*p*d.x,
+        y:u*u*u*a.y+3*u*u*p*b.y+3*u*p*p*c.y+p*p*p*d.y
+      };
+    }
+    function cubicTangent(a,b,c,d,p){
+      const u=1-p;
+      const x=3*u*u*(b.x-a.x)+6*u*p*(c.x-b.x)+3*p*p*(d.x-c.x);
+      const y=3*u*u*(b.y-a.y)+6*u*p*(c.y-b.y)+3*p*p*(d.y-c.y);
+      return Math.atan2(y,x);
+    }
+    function drawCubic(a,b,c,d,p,width,color){
+      if(p<=0) return;
       ctx.save();
+      ctx.lineCap="round";
+      ctx.lineJoin="round";
+      ctx.lineWidth=width+3;
+      ctx.strokeStyle="rgba(92,48,45,.12)";
+      ctx.shadowColor="rgba(65,41,35,.18)";
+      ctx.shadowBlur=7;
       ctx.beginPath();
-      ctx.lineCap = "round";
-      ctx.lineWidth = lw;
-      ctx.strokeStyle = col;
-      ctx.moveTo(p0.x,p0.y);
-      const steps = Math.max(1,Math.ceil(40*p));
+      ctx.moveTo(a.x,a.y);
+      const steps=Math.max(2,Math.ceil(65*p));
       for(let i=1;i<=steps;i++){
-        const s = Math.min(p,i/40), u = 1-s;
-        const x = u*u*u*p0.x + 3*u*u*s*p1.x + 3*u*s*s*p2.x + s*s*s*p3.x;
-        const y = u*u*u*p0.y + 3*u*u*s*p1.y + 3*u*s*s*p2.y + s*s*s*p3.y;
-        ctx.lineTo(x,y);
+        const pt=cubicPoint(a,b,c,d,Math.min(p,i/65));
+        ctx.lineTo(pt.x,pt.y);
       }
       ctx.stroke();
+      ctx.shadowBlur=0;
+      ctx.lineWidth=width;
+      ctx.strokeStyle=color;
+      ctx.stroke();
+      ctx.globalAlpha=.28;
+      ctx.lineWidth=Math.max(1,width*.16);
+      ctx.strokeStyle="#fff8e9";
+      ctx.stroke();
+      ctx.restore();
+      return {point:cubicPoint(a,b,c,d,p),angle:cubicTangent(a,b,c,d,p)};
+    }
+
+    function drawBrush(x,y,angle,scale,color,time){
+      const length=scale*.245;
+      const width=scale*.026;
+      ctx.save();
+      ctx.translate(x,y);
+      ctx.rotate(angle-Math.PI/2);
+      ctx.translate(0,Math.sin(time*8)*scale*.006);
+      ctx.shadowColor="rgba(48,34,24,.25)";
+      ctx.shadowBlur=scale*.018;
+      ctx.shadowOffsetY=scale*.012;
+
+      // Bristles, with the freshly dipped paint at the point.
+      ctx.beginPath();
+      ctx.moveTo(-width*.95,-length*.19);
+      ctx.quadraticCurveTo(-width*.75,-length*.08,0,scale*.012);
+      ctx.quadraticCurveTo(width*.75,-length*.08,width*.95,-length*.19);
+      ctx.closePath();
+      ctx.fillStyle=color;
+      ctx.fill();
+
+      // Golden ferrule.
+      ctx.beginPath();
+      ctx.moveTo(-width*1.2,-length*.2);
+      ctx.lineTo(width*1.2,-length*.2);
+      ctx.lineTo(width*.9,-length*.31);
+      ctx.lineTo(-width*.9,-length*.31);
+      ctx.closePath();
+      const metal=ctx.createLinearGradient(-width,0,width,0);
+      metal.addColorStop(0,"#9c7b43");
+      metal.addColorStop(.45,"#f4df9b");
+      metal.addColorStop(1,"#98713b");
+      ctx.fillStyle=metal;
+      ctx.fill();
+
+      // Warm wooden handle.
+      const wood=ctx.createLinearGradient(-width,0,width,0);
+      wood.addColorStop(0,"#713a24");
+      wood.addColorStop(.45,"#c7824c");
+      wood.addColorStop(1,"#753c24");
+      ctx.beginPath();
+      ctx.moveTo(-width*.78,-length*.3);
+      ctx.quadraticCurveTo(-width*.86,-length*.66,-width*.46,-length);
+      ctx.quadraticCurveTo(0,-length*1.035,width*.46,-length);
+      ctx.quadraticCurveTo(width*.86,-length*.66,width*.78,-length*.3);
+      ctx.closePath();
+      ctx.fillStyle=wood;
+      ctx.fill();
+      ctx.shadowColor="transparent";
+      ctx.strokeStyle="rgba(255,231,194,.55)";
+      ctx.lineWidth=Math.max(1,scale*.002);
+      ctx.beginPath();
+      ctx.moveTo(0,-length*.38);
+      ctx.lineTo(0,-length*.88);
+      ctx.stroke();
+
+      // Tiny wet-paint glint at the bristle tip.
+      ctx.beginPath();
+      ctx.arc(0,scale*.008,scale*.009,0,Math.PI*2);
+      ctx.fillStyle="#fff6dc";
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function drawPetal(cx,cy,angle,progress,scale,color){
+      if(progress<=0) return;
+      const length=scale*.125*progress;
+      const spread=scale*.047*progress;
+      ctx.save();
+      ctx.translate(cx,cy);
+      ctx.rotate(angle);
+      ctx.shadowColor="rgba(114,39,58,.16)";
+      ctx.shadowBlur=scale*.012;
+      ctx.beginPath();
+      ctx.moveTo(0,0);
+      ctx.bezierCurveTo(-spread,-length*.38,-spread*.72,-length*.82,0,-length);
+      ctx.bezierCurveTo(spread*.72,-length*.82,spread,-length*.38,0,0);
+      const grad=ctx.createLinearGradient(0,0,0,-length);
+      grad.addColorStop(0,"#e94f74");
+      grad.addColorStop(1,color);
+      ctx.fillStyle=grad;
+      ctx.fill();
+      ctx.shadowBlur=0;
+      ctx.strokeStyle="rgba(255,235,225,.55)";
+      ctx.lineWidth=Math.max(1,scale*.0025);
+      ctx.stroke();
+      ctx.restore();
+      return {x:cx+Math.sin(angle)*length*.86,y:cy-Math.cos(angle)*length*.86,angle:angle-Math.PI/2};
+    }
+
+    function drawRainbowArc(cx,cy,radius,progress,color,width){
+      if(progress<=0) return null;
+      const angle=Math.PI+Math.PI*progress;
+      ctx.save();
+      ctx.lineCap="round";
+      ctx.lineWidth=width+2;
+      ctx.strokeStyle="rgba(82,62,42,.10)";
+      ctx.beginPath();
+      ctx.arc(cx,cy,radius,Math.PI,angle,false);
+      ctx.stroke();
+      ctx.lineWidth=width;
+      ctx.strokeStyle=color;
+      ctx.beginPath();
+      ctx.arc(cx,cy,radius,Math.PI,angle,false);
+      ctx.stroke();
+      ctx.restore();
+      return {x:cx+Math.cos(angle)*radius,y:cy+Math.sin(angle)*radius,angle:angle+Math.PI/2};
+    }
+
+    function drawBackdrop(sc){
+      ctx.fillStyle="#FAF6F0";
+      ctx.fillRect(0,0,w,h);
+      const wash=ctx.createRadialGradient(w*.76,h*.52,sc*.025,w*.76,h*.52,sc*.72);
+      wash.addColorStop(0,"rgba(255,255,255,.62)");
+      wash.addColorStop(1,"rgba(250,246,240,0)");
+      ctx.fillStyle=wash;
+      ctx.fillRect(0,0,w,h);
+
+      // Soft paper-like decoration, kept away from the headline.
+      ctx.save();
+      ctx.globalAlpha=.25;
+      for(let i=0;i<8;i++){
+        const x=w*(.53+(i%4)*.105);
+        const y=h*(.17+Math.floor(i/4)*.66);
+        ctx.beginPath();
+        ctx.arc(x,y,sc*.006,0,Math.PI*2);
+        ctx.fillStyle=i%2?"#e6b2a2":"#d5b979";
+        ctx.fill();
+      }
       ctx.restore();
     }
 
     function drawFrame(t){
-      if (!w || !h) return;
-      const sc = Math.min(w,h);
-      ctx.clearRect(0,0,w,h);
-      ctx.fillStyle = "#FAF6F0";
-      ctx.fillRect(0,0,w,h);
+      if(!w||!h) return;
+      const sc=Math.min(w,h);
+      drawBackdrop(sc);
+      const stageBrush=null;
 
-      const p1 = ease(clamp(t/1.5));
-      bezier({x:w*.2,y:h*.7},{x:w*.4,y:h*.2},{x:w*.7,y:h*.8},{x:w*.9,y:h*.35},p1,sc*.08,"rgba(244,63,94,.85)");
+      // Two flowing mural strokes. The brush follows the wet edge of each stroke.
+      const a1={x:w*.43,y:h*.69}, b1={x:w*.54,y:h*.16}, c1={x:w*.76,y:h*.88}, d1={x:w*.94,y:h*.34};
+      const p1=ease(clamp(t/1.8));
+      const stroke1=drawCubic(a1,b1,c1,d1,p1,sc*.075,"#ef5574");
 
-      const p2 = ease(clamp((t-1.2)/1.5));
-      bezier({x:w*.25,y:h*.4},{x:w*.5,y:h*.75},{x:w*.75,y:h*.25},{x:w*.92,y:h*.6},p2,sc*.06,"rgba(245,158,11,.88)");
+      const a2={x:w*.49,y:h*.43}, b2={x:w*.62,y:h*.78}, c2={x:w*.81,y:h*.22}, d2={x:w*.96,y:h*.59};
+      const p2=ease(clamp((t-1.55)/1.75));
+      const stroke2=drawCubic(a2,b2,c2,d2,p2,sc*.055,"#f0a52f");
 
+      let activeBrush=null;
+      let activeColor="#ef5574";
+      if(t<1.55&&stroke1){activeBrush=stroke1;activeColor="#ef5574";}
+      else if(t<3.3&&stroke2){activeBrush=stroke2;activeColor="#f0a52f";}
+
+      // Architectural arch, painted from one side to the other.
       if(t>3){
-        const p3 = ease(clamp((t-3)/2));
+        const p3=ease(clamp((t-3)/1.7));
+        const cx=w*.79, cy=h*.48, radius=sc*.135;
+        const angle=Math.PI+Math.PI*p3;
         ctx.save();
-        ctx.strokeStyle = "#1e293b";
-        ctx.lineWidth = Math.max(2,sc*.009);
+        ctx.lineCap="round";
+        ctx.lineWidth=sc*.012;
+        ctx.strokeStyle="rgba(30,41,59,.12)";
         ctx.beginPath();
-        ctx.arc(w*.75,h*.45,sc*.12*p3,Math.PI,0);
+        ctx.arc(cx,cy,radius,Math.PI,angle,false);
+        ctx.stroke();
+        ctx.strokeStyle="#26384d";
+        ctx.lineWidth=sc*.008;
+        ctx.beginPath();
+        ctx.arc(cx,cy,radius,Math.PI,angle,false);
         ctx.stroke();
         ctx.restore();
+        if(t<4.85) activeBrush={point:{x:cx+Math.cos(angle)*radius,y:cy+Math.sin(angle)*radius},angle:angle+Math.PI/2};
+        activeColor="#26384d";
       }
 
-      if(t>6){
-        const p4 = ease(clamp((t-6)/2.5));
-        ctx.save();
-        ctx.translate(w*.48,h*.65);
-        [-.7,-.35,0,.35,.7].forEach((a,i)=>{
-          ctx.save();
-          ctx.rotate(a*p4);
-          ctx.fillStyle = i%2 ? "#f43f5e" : "#fb7185";
+      // Lotus blooms petal by petal while the brush traces the opening petals.
+      const lotusStart=4.75;
+      const lotusX=w*.75, lotusY=h*.76;
+      const petalAngles=[-1.12,-.57,0,.57,1.12];
+      if(t>lotusStart){
+        let currentPetal=null;
+        petalAngles.forEach((angle,i)=>{
+          const progress=ease(clamp((t-lotusStart-i*.32)/.78));
+          const petal=drawPetal(lotusX,lotusY,angle,progress,sc,i%2?"#fb7892":"#ec5275");
+          if(progress>0&&progress<1) currentPetal=petal;
+        });
+        if(t<7.95&&currentPetal){
+          activeBrush={point:{x:currentPetal.x,y:currentPetal.y},angle:currentPetal.angle};
+          activeColor="#ed5275";
+        }
+        // Small centre dot appears once the flower has opened.
+        const bloom=ease(clamp((t-6.55)/.6));
+        if(bloom>0){
           ctx.beginPath();
-          ctx.ellipse(0,-sc*.07*p4,sc*.02*p4,sc*.07*p4,0,0,Math.PI*2);
+          ctx.arc(lotusX,lotusY,sc*.017*bloom,0,Math.PI*2);
+          ctx.fillStyle="#e9ad36";
           ctx.fill();
-          ctx.restore();
+        }
+      }
+
+      // Children's rainbow: four coloured arcs painted one after another.
+      const rainbowStart=7.75;
+      const rainbowX=w*.59, rainbowY=h*.88, rainbowR=sc*.16;
+      const rainbowColors=["#ef4444","#f59e0b","#22a06b","#38a7db"];
+      rainbowColors.forEach((color,i)=>{
+        const progress=ease(clamp((t-rainbowStart-i*.55)/.68));
+        const radius=rainbowR-i*sc*.019;
+        const tip=drawRainbowArc(rainbowX,rainbowY,radius,progress,color,sc*.009);
+        if(t>=rainbowStart+i*.55&&t<rainbowStart+(i+1)*.55+.68&&tip){
+          activeBrush={point:tip,angle:tip.angle};
+          activeColor=color;
+        }
+      });
+
+      // Lift the brush away and let the finished artwork breathe before looping.
+      if(t>=10.65){
+        const lift=clamp((t-10.65)/.55);
+        activeBrush={point:{x:mix(w*.76,w*.96,lift),y:mix(h*.65,h*.18,lift)},angle:-.65};
+        activeColor="#ef5574";
+        const pulse=.5+.5*Math.sin((t-10.65)*8);
+        ctx.save();
+        ctx.globalAlpha=lift*pulse*.7;
+        [[.86,.25],[.94,.72],[.68,.18],[.52,.83]].forEach(([x,y],i)=>{
+          ctx.beginPath();
+          ctx.arc(w*x,h*y,sc*(.004+i*.001),0,Math.PI*2);
+          ctx.fillStyle=i%2?"#eaa63b":"#ef7890";
+          ctx.fill();
         });
         ctx.restore();
       }
 
-      if(t>9){
-        const p5 = ease(clamp((t-9)/2));
-        ["#ef4444","#f59e0b","#22c55e","#38bdf8"].forEach((col,i)=>{
-          ctx.save();
-          ctx.strokeStyle = col;
-          ctx.lineWidth = Math.max(2,sc*.012);
-          ctx.lineCap = "round";
-          ctx.beginPath();
-          ctx.arc(w*.24,h*.75,sc*(.13-i*.016),Math.PI,Math.PI+Math.PI*p5);
-          ctx.stroke();
-          ctx.restore();
-        });
+      if(activeBrush&&activeBrush.point){
+        drawBrush(activeBrush.point.x,activeBrush.point.y,activeBrush.angle,sc,activeColor,t);
       }
 
-      if(t>11.1){
-        ctx.fillStyle = "rgba(250,246,240,"+clamp((t-11.1)/.9)+")";
+      if(t>11.35){
+        const fade=clamp((t-11.35)/.65);
+        ctx.fillStyle="rgba(250,246,240,"+fade+")";
         ctx.fillRect(0,0,w,h);
       }
     }
 
     function animate(ts){
-      raf = 0;
-      if(!last) last = ts;
-      const dt = Math.min((ts-last)/1000,.05);
-      last = ts;
-      if(inView && !document.hidden){
-        elapsed = (elapsed+dt)%12;
+      raf=0;
+      if(!last) last=ts;
+      const dt=Math.min((ts-last)/1000,.05);
+      last=ts;
+      if(inView&&!document.hidden){
+        elapsed=(elapsed+dt)%12;
         drawFrame(elapsed);
       }
-      raf = requestAnimationFrame(animate);
+      raf=requestAnimationFrame(animate);
     }
 
     function start(){
-      if(reduceMotion){
-        drawFrame(10.7);
+      if(reducedMotion){
+        drawFrame(10.8);
         return;
       }
       if(!raf){
-        last = 0;
-        raf = requestAnimationFrame(animate);
+        last=0;
+        raf=requestAnimationFrame(animate);
       }
     }
     function stop(){
@@ -699,16 +903,15 @@
       last=0;
     }
 
-    if(typeof ResizeObserver !== "undefined"){
-      const observer = new ResizeObserver(resize);
+    if(typeof ResizeObserver!=="undefined"){
+      const observer=new ResizeObserver(resize);
       observer.observe(host);
     }else{
       window.addEventListener("resize",resize,{passive:true});
     }
-
     if("IntersectionObserver" in window){
-      const visibilityObserver = new IntersectionObserver(entries=>{
-        inView = entries[0].isIntersecting;
+      const visibilityObserver=new IntersectionObserver(entries=>{
+        inView=entries[0].isIntersecting;
         if(inView) start(); else stop();
       },{threshold:.01});
       visibilityObserver.observe(host);
