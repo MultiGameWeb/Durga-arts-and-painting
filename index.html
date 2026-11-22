@@ -33,7 +33,7 @@
     section{padding:92px 0}.section-head{display:flex;align-items:end;justify-content:space-between;gap:28px;margin-bottom:36px}.section-head h2{max-width:660px;margin:12px 0 0;font-size:clamp(38px,4.5vw,56px);line-height:1.03}.section-head p{max-width:370px;margin:0 0 4px;color:var(--muted);font-size:14px;line-height:1.8}
     .services{background:var(--white)}.service-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.service-card{min-height:245px;padding:25px 21px;border:1px solid var(--line);border-radius:18px;background:var(--white);transition:transform .22s,box-shadow .22s,border-color .22s}.service-card:hover{transform:translateY(-5px);border-color:#d9a58d;box-shadow:0 16px 35px rgba(48,39,26,.08)}.service-no{color:var(--orange);font:14px Georgia,serif}.service-icon{width:48px;height:48px;display:grid;place-items:center;margin:18px 0;border-radius:15px;background:var(--paper2);font-size:23px}.service-card h3{margin:0 0 8px;font:500 20px Georgia,serif}.service-card p{margin:0;color:var(--muted);font-size:12px;line-height:1.8}
     .gallery-section{background:var(--paper)}.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}.filter{padding:9px 16px;border:1px solid var(--line);border-radius:999px;background:transparent;color:#555148;font-size:12px;font-weight:750}.filter[aria-pressed=true]{border-color:var(--ink);background:var(--ink);color:white}
-    .gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.gallery-item{position:relative;min-width:0;overflow:hidden;padding:0;border:0;border-radius:15px;background:var(--paper2);text-align:left}.gallery-item[hidden]{display:none}.gallery-item img{width:100%;height:245px;object-fit:cover;transition:transform .45s}.gallery-item:hover img{transform:scale(1.055)}.gallery-item:after{content:"";position:absolute;inset:40% 0 0;background:linear-gradient(transparent,rgba(20,19,16,.7));pointer-events:none}.gallery-label{position:absolute;z-index:1;left:14px;right:12px;bottom:13px;color:white;font-size:12px;font-weight:800}.gallery-hint{margin:16px 0 0;text-align:center;color:var(--muted);font-size:11px}
+    .gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.gallery-item{position:relative;min-width:0;overflow:hidden;padding:0;border:0;border-radius:15px;background:var(--paper2);text-align:left}.gallery-item[hidden]{display:none}.gallery-item img{width:100%;height:245px;object-fit:cover;transform:translate3d(0,var(--scroll-shift,0px),0) scale(1.045);transition:transform .28s ease-out;will-change:transform}.gallery-item:hover img{transform:translate3d(0,var(--scroll-shift,0px),0) scale(1.075)}.gallery-item:after{content:"";position:absolute;inset:40% 0 0;background:linear-gradient(transparent,rgba(20,19,16,.7));pointer-events:none}.gallery-label{position:absolute;z-index:1;left:14px;right:12px;bottom:13px;color:white;font-size:12px;font-weight:800}.gallery-hint{margin:16px 0 0;text-align:center;color:var(--muted);font-size:11px}
     .clients{padding:62px 0;background:var(--paper2)}.clients-head{display:flex;align-items:center;justify-content:space-between;gap:25px;margin-bottom:23px}.clients-head h2{margin:0;font-size:31px}.clients-head p{max-width:360px;margin:0;color:var(--muted);font-size:12px}.client-list{display:flex;flex-wrap:wrap;gap:10px}.client-chip{padding:11px 17px;border:1px solid #d8d0c2;border-radius:999px;background:rgba(255,254,250,.7);color:#4d4940;font:16px Georgia,serif}
     .process{background:var(--white)}.process-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;counter-reset:step}.process-card{min-height:185px;padding:22px;border-top:1px solid var(--line);counter-increment:step}.process-card:before{content:"0" counter(step);display:block;margin-bottom:23px;color:var(--orange);font:23px Georgia,serif}.process-card h3{margin:0 0 7px;font:500 20px Georgia,serif}.process-card p{margin:0;color:var(--muted);font-size:12px;line-height:1.8}
     .about{background:var(--paper)}.about-grid{display:grid;grid-template-columns:.9fr 1.1fr;align-items:center;gap:68px}.about-art{position:relative;min-height:430px}.about-art img:first-child{width:82%;height:390px;object-fit:cover;border-radius:20px}.about-art img:last-child{position:absolute;right:0;bottom:0;width:48%;height:205px;object-fit:cover;border:8px solid var(--paper);border-radius:18px}.about-copy h2{margin:13px 0 19px;font-size:clamp(40px,4.7vw,58px);line-height:1.02}.about-copy p{color:var(--muted);font-size:14px;line-height:1.9}.about-points{display:grid;grid-template-columns:1fr 1fr;gap:12px 20px;margin-top:24px}.about-points span{display:flex;align-items:center;gap:9px;font-size:12px;font-weight:750}.check{width:20px;height:20px;display:grid;place-items:center;border-radius:50%;background:var(--green);color:white;font-size:11px}
@@ -47,6 +47,18 @@
     @media(max-width:720px){.container{width:calc(100% - 34px)}.nav{min-height:68px}.navlinks,.nav-cta{display:none}.menu-toggle{display:grid;place-items:center}.mobile-menu{position:absolute;top:68px;left:0;right:0;display:none;padding:8px 17px 18px;border-bottom:1px solid var(--line);background:var(--paper);box-shadow:0 15px 25px rgba(0,0,0,.08)}.mobile-menu.open{display:grid}.mobile-menu a{padding:13px 7px;border-bottom:1px solid var(--line);font-size:14px}.mobile-menu .btn{margin-top:12px;border:0;color:white}.hero{padding:53px 0 42px}.hero-grid{grid-template-columns:1fr;gap:12px}h1{font-size:clamp(48px,13vw,70px)}.hero-copy>p{font-size:15px}.hero-art{min-height:min(112vw,470px);margin-top:5px}.hero-photo{top:5px;right:4%;width:83%;height:88%;border-radius:44% 44% 18px 18px}.hero-sticker{bottom:18px;width:125px}.hero-sticker strong{font-size:34px}.hero-caption{width:160px;padding:12px}.trust-inner{min-height:auto;padding:19px 0;gap:8px}.trust-item{flex-direction:column;gap:5px;text-align:center}.trust-item strong{font-size:21px}.trust-item span{font-size:9px}.trust-icon{width:31px;height:31px;font-size:14px}section{padding:68px 0}.section-head{display:block;margin-bottom:27px}.section-head h2{font-size:42px}.section-head p{margin-top:13px}.service-grid{gap:10px}.service-card{min-height:220px;padding:18px 15px}.service-card h3{font-size:18px}.service-card p{font-size:11px}.service-icon{margin:14px 0}.gallery{grid-template-columns:repeat(2,1fr);gap:9px}.gallery-item img{height:190px}.gallery-label{left:10px;bottom:10px;font-size:10px}.clients-head{display:block}.clients-head p{margin-top:8px}.client-chip{padding:10px 13px;font-size:14px}.process-grid{grid-template-columns:repeat(2,1fr);gap:8px}.process-card{min-height:170px;padding:17px 12px}.process-card:before{margin-bottom:14px}.process-card h3{font-size:18px}.about-grid{grid-template-columns:1fr;gap:27px}.about-art{min-height:340px}.about-art img:first-child{height:315px}.about-art img:last-child{height:165px}.about-copy h2{font-size:45px}.faq-grid{grid-template-columns:1fr;gap:20px}.faq-intro h2{font-size:40px}.contact{padding:67px 0}.contact-grid{grid-template-columns:1fr;gap:28px}.contact-copy h2{font-size:48px}.footer-row{align-items:flex-start;flex-direction:column}.lightbox-inner{grid-template-columns:34px minmax(0,1fr) 34px;gap:5px}.lb-control{width:34px;height:34px;font-size:18px}.lb-close{top:-48px}.float-wa{right:14px;bottom:14px;width:51px;height:51px}}
     @media(max-width:380px){.brand-name{font-size:18px}.hero-actions .btn{width:100%}.about-points{grid-template-columns:1fr}.gallery-item img{height:160px}}
     @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+    .paint-section{background:var(--paper2)}
+    .paint-stage{display:grid;grid-template-columns:.78fr 1.22fr;align-items:center;gap:20px;padding:26px;border:1px solid var(--line);border-radius:24px;background:linear-gradient(135deg,#fffefa 0%,#eee4d4 100%);box-shadow:var(--shadow)}
+    .paint-copy{padding:20px 16px}.paint-kicker{display:inline-flex;align-items:center;gap:8px;color:var(--orangeDark);font-size:10px;font-weight:850;letter-spacing:1.8px;text-transform:uppercase}.paint-kicker:before{content:"";width:22px;height:2px;background:currentColor}
+    .paint-copy h3{max-width:340px;margin:15px 0 12px;font:500 clamp(30px,3.5vw,43px)/1.04 Georgia,serif;letter-spacing:-1px}.paint-copy p{max-width:340px;color:var(--muted);font-size:13px;line-height:1.85}.paint-live{display:inline-flex;align-items:center;gap:9px;margin-top:18px;padding:9px 13px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.65);color:#58564e;font-size:10px;font-weight:800}.paint-live i{width:7px;height:7px;border-radius:50%;background:#4d9b67;box-shadow:0 0 0 4px rgba(77,155,103,.13)}
+    .paint-visual{position:relative;min-height:390px;overflow:hidden;border-radius:19px;background:radial-gradient(ellipse at 50% 40%,#fffdf4 0%,#e8ddc9 72%,#d7c8b0 100%);box-shadow:inset 0 0 35px rgba(83,62,35,.09)}
+    .paint-visual canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+    .paint-fallback{position:absolute;inset:0;display:grid;place-content:center;justify-items:center;gap:12px;color:#554c3e;text-align:center;font:16px Georgia,serif}.paint-fallback[hidden]{display:none!important}.paint-fallback svg{width:160px;height:160px;filter:drop-shadow(0 12px 10px rgba(60,48,28,.13))}.paint-fallback span{font-size:12px;color:var(--muted)}
+    .paint-visual-label{position:absolute;left:14px;bottom:12px;padding:7px 11px;border:1px solid rgba(255,255,255,.7);border-radius:999px;background:rgba(255,254,250,.76);color:#5c5549;font-size:9px;font-weight:850;letter-spacing:1.2px;text-transform:uppercase;pointer-events:none}
+    @media(max-width:720px){.paint-stage{grid-template-columns:1fr;gap:8px;padding:15px}.paint-copy{padding:13px 8px 4px}.paint-copy h3{font-size:36px}.paint-visual{min-height:290px}.paint-visual-label{font-size:8px}}
+    @media(prefers-reduced-motion:reduce){.gallery-item img{transition:none!important;transform:none!important}.gallery-item:hover img{transform:none!important}}
+
   </style>
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"ProfessionalService","name":"Durga Arts & Paintings","telephone":"+918008157900","areaServed":{"@type":"City","name":"Hyderabad"},"description":"School wall murals, play school paintings, interior wall art and canvas paintings in Hyderabad.","url":"https://multigameweb.github.io/Durga-arts-and-painting/"}
@@ -114,6 +126,37 @@
       <p class="gallery-hint">Select a photo to open the full-size view.</p>
     </div></section>
 
+    
+    <section class="paint-section" id="paint-demo">
+      <div class="container">
+        <div class="section-head">
+          <div><span class="eyebrow">A little studio magic</span><h2>Watch a smile come to life.</h2></div>
+          <p>A small 3D brush-painting moment — a little colour, a little movement and one happy face.</p>
+        </div>
+        <div class="paint-stage">
+          <div class="paint-copy">
+            <span class="paint-kicker">Made with a little imagination</span>
+            <h3>Every wall deserves a happy touch.</h3>
+            <p>Watch the brush move across the canvas and paint a cheerful smiley. Just a playful detail to celebrate the joy of art.</p>
+            <div class="paint-live"><i></i> A looping 3D paint animation</div>
+          </div>
+          <div class="paint-visual" id="paintVisual">
+            <canvas id="paint3d" aria-label="A 3D paintbrush painting a yellow smiley face"></canvas>
+            <div class="paint-fallback" id="paintFallback">
+              <svg viewBox="0 0 180 180" role="img" aria-label="A yellow smiling face">
+                <circle cx="90" cy="90" r="68" fill="#f3c541" stroke="#d99c20" stroke-width="7"/>
+                <ellipse cx="67" cy="75" rx="7" ry="11" fill="#282720"/>
+                <ellipse cx="113" cy="75" rx="7" ry="11" fill="#282720"/>
+                <path d="M53 105 Q90 145 127 105" fill="none" stroke="#282720" stroke-width="8" stroke-linecap="round"/>
+              </svg>
+              <strong>A little paint. A lot of happy.</strong><span>3D animation loads when WebGL is available.</span>
+            </div>
+            <span class="paint-visual-label">Brush • Paint • Smile</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="clients"><div class="container">
       <div class="clients-head"><h2>Places we've worked</h2><p>Schools and play schools named in our existing project portfolio.</p></div>
       <div class="client-list"><span class="client-chip">Krishnaveni Schools</span><span class="client-chip">TVR Model Schools</span><span class="client-chip">Gowtham Model Schools</span><span class="client-chip">SR DG Schools</span><span class="client-chip">And many play schools</span></div>
@@ -171,6 +214,7 @@
     <div class="lightbox-inner"><button class="lb-control" id="prevImage" aria-label="Previous image">‹</button><figure><img id="lightboxImage" alt=""><figcaption id="lightboxCaption"></figcaption></figure><button class="lb-control" id="nextImage" aria-label="Next image">›</button><button class="lb-control lb-close" id="closeLightbox" aria-label="Close image viewer">×</button></div>
   </div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
 
@@ -203,6 +247,36 @@
         item.hidden = filter !== "all" && !categories.includes(filter);
       });
     }));
+
+
+    // Subtle scroll-linked drift on gallery photos.
+    const prefersLessMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let parallaxQueued = false;
+    function updateGalleryParallax() {
+      if (prefersLessMotion || parallaxQueued) return;
+      parallaxQueued = true;
+      requestAnimationFrame(() => {
+        parallaxQueued = false;
+        const viewportHeight = window.innerHeight || 1;
+        galleryItems.forEach(item => {
+          const photo = item.querySelector("img");
+          if (!photo || item.hidden) {
+            if (photo) photo.style.setProperty("--scroll-shift", "0px");
+            return;
+          }
+          const rect = item.getBoundingClientRect();
+          if (rect.bottom < -80 || rect.top > viewportHeight + 80) return;
+          const relativeCenter = (rect.top + rect.height / 2 - viewportHeight / 2) / viewportHeight;
+          const shift = Math.max(-8, Math.min(8, relativeCenter * -11));
+          photo.style.setProperty("--scroll-shift", shift.toFixed(1) + "px");
+        });
+      });
+    }
+    if (!prefersLessMotion) {
+      window.addEventListener("scroll", updateGalleryParallax, {passive:true});
+      window.addEventListener("resize", updateGalleryParallax, {passive:true});
+      updateGalleryParallax();
+    }
 
     const lightbox = document.getElementById("lightbox");
     const lightboxImage = document.getElementById("lightboxImage");
@@ -247,6 +321,221 @@
       if (event.key === "ArrowLeft") showImage(currentIndex - 1);
       if (event.key === "ArrowRight") showImage(currentIndex + 1);
     });
+
+    // Small Three.js scene: a 3D brush paints a simple smiley in a repeating loop.
+    (function initPaintAnimation() {
+      const host = document.getElementById("paintVisual");
+      const canvas = document.getElementById("paint3d");
+      const fallback = document.getElementById("paintFallback");
+      if (!host || !canvas || !window.THREE) return;
+
+      const THREE = window.THREE;
+      let renderer;
+      try {
+        renderer = new THREE.WebGLRenderer({canvas:canvas,alpha:true,antialias:true,powerPreference:"low-power"});
+      } catch (error) {
+        return;
+      }
+
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.6));
+      renderer.setClearColor(0x000000, 0);
+      if (renderer.outputEncoding !== undefined) renderer.outputEncoding = THREE.sRGBEncoding;
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 60);
+      camera.position.set(0, 0, 10.6);
+
+      scene.add(new THREE.AmbientLight(0xffffff, 1.3));
+      const keyLight = new THREE.DirectionalLight(0xffffff, 1.55);
+      keyLight.position.set(-3.5, 5, 7);
+      scene.add(keyLight);
+      const warmLight = new THREE.PointLight(0xffd48a, 0.55, 18);
+      warmLight.position.set(3, -2, 4);
+      scene.add(warmLight);
+
+      const frameMaterial = new THREE.MeshStandardMaterial({color:0x9a704a,roughness:0.72});
+      const frame = new THREE.Mesh(new THREE.BoxGeometry(7.55,4.45,0.22), frameMaterial);
+      frame.position.z = -0.88;
+      scene.add(frame);
+
+      const boardMaterial = new THREE.MeshStandardMaterial({color:0xf5eddd,roughness:0.92});
+      const board = new THREE.Mesh(new THREE.PlaneGeometry(7.32,4.22), boardMaterial);
+      board.position.z = -0.74;
+      scene.add(board);
+
+      const faceMaterial = new THREE.MeshStandardMaterial({color:0xf2c53c,roughness:0.48,metalness:0.02,transparent:true,opacity:0});
+      const face = new THREE.Mesh(new THREE.CircleGeometry(1.23,72), faceMaterial);
+      face.position.set(0,0,-0.59);
+      scene.add(face);
+
+      const paintYellow = new THREE.MeshStandardMaterial({color:0xeab308,roughness:0.34});
+      const ringDabs = [];
+      const dabGeometry = new THREE.SphereGeometry(0.088,12,9);
+      for (let i=0;i<88;i++) {
+        const angle = -Math.PI/2 + (i/88)*Math.PI*2;
+        const dab = new THREE.Mesh(dabGeometry, paintYellow);
+        dab.position.set(Math.cos(angle)*1.24,Math.sin(angle)*1.24,-0.48);
+        dab.scale.set(0.84,0.84,0.28);
+        dab.visible = false;
+        scene.add(dab);
+        ringDabs.push(dab);
+      }
+
+      const inkMaterial = new THREE.MeshStandardMaterial({color:0x27251f,roughness:0.42,transparent:true,opacity:0});
+      const leftEye = new THREE.Mesh(new THREE.SphereGeometry(0.135,18,14),inkMaterial.clone());
+      const rightEye = new THREE.Mesh(new THREE.SphereGeometry(0.135,18,14),inkMaterial.clone());
+      leftEye.position.set(-0.43,0.34,-0.40);
+      rightEye.position.set(0.43,0.34,-0.40);
+      leftEye.scale.set(0.82,1.12,0.28);
+      rightEye.scale.set(0.82,1.12,0.28);
+      scene.add(leftEye,rightEye);
+
+      const smileCurve = new THREE.QuadraticBezierCurve3(
+        new THREE.Vector3(-0.56,-0.14,-0.39),
+        new THREE.Vector3(0,-0.92,-0.39),
+        new THREE.Vector3(0.56,-0.14,-0.39)
+      );
+      const smileGeometry = new THREE.TubeGeometry(smileCurve,80,0.047,9,false);
+      smileGeometry.setDrawRange(0,0);
+      const smile = new THREE.Mesh(smileGeometry,new THREE.MeshStandardMaterial({color:0x27251f,roughness:0.42}));
+      scene.add(smile);
+
+      const brush = new THREE.Group();
+      const handleMaterial = new THREE.MeshStandardMaterial({color:0x9d4f2c,roughness:0.38});
+      const ferruleMaterial = new THREE.MeshStandardMaterial({color:0xc5a45a,metalness:0.72,roughness:0.3});
+      const bristleMaterial = new THREE.MeshStandardMaterial({color:0xeab308,roughness:0.62});
+      const handle = new THREE.Mesh(new THREE.CylinderGeometry(0.045,0.065,1.18,14),handleMaterial);
+      handle.position.y=0.93;
+      const ferrule = new THREE.Mesh(new THREE.CylinderGeometry(0.073,0.085,0.22,14),ferruleMaterial);
+      ferrule.position.y=0.34;
+      const bristles = new THREE.Mesh(new THREE.ConeGeometry(0.105,0.38,14),bristleMaterial);
+      bristles.rotation.z=Math.PI;
+      bristles.position.y=0.19;
+      brush.add(handle,ferrule,bristles);
+      brush.position.set(0,-1.23,-0.08);
+      scene.add(brush);
+
+      function resizePaintScene() {
+        const rect = host.getBoundingClientRect();
+        const width = Math.max(280,Math.floor(rect.width));
+        const height = Math.max(260,Math.floor(rect.height));
+        renderer.setSize(width,height,false);
+        camera.aspect = width/height;
+        camera.updateProjectionMatrix();
+        renderer.render(scene,camera);
+      }
+      resizePaintScene();
+      if (typeof ResizeObserver !== "undefined") {
+        const sizeObserver = new ResizeObserver(resizePaintScene);
+        sizeObserver.observe(host);
+      } else {
+        window.addEventListener("resize",resizePaintScene,{passive:true});
+      }
+      if (fallback) fallback.hidden = true;
+
+      const motionReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (motionReduced) {
+        faceMaterial.opacity=1;
+        ringDabs.forEach(dab=>dab.visible=true);
+        leftEye.material.opacity=1;
+        rightEye.material.opacity=1;
+        smileGeometry.setDrawRange(0,smileGeometry.index ? smileGeometry.index.count : smileGeometry.attributes.position.count);
+        brush.visible=false;
+        renderer.render(scene,camera);
+        return;
+      }
+
+      const cycleLength = 9.2;
+      let elapsed = 0;
+      let lastTime = performance.now();
+      let isInView = true;
+      const observer = ("IntersectionObserver" in window) ? new IntersectionObserver(entries=>{
+        isInView=entries[0].isIntersecting;
+        lastTime=performance.now();
+      },{threshold:0.05}) : null;
+      if(observer) observer.observe(host);
+
+      function animate(now) {
+        requestAnimationFrame(animate);
+        const dt=Math.min((now-lastTime)/1000,0.05);
+        lastTime=now;
+        if (!isInView || document.hidden) return;
+
+        elapsed=(elapsed+dt)%cycleLength;
+        const t=elapsed;
+        let target=new THREE.Vector3(0,-1.23,-0.08);
+        let brushAngle=0;
+
+        if(t<2.8) {
+          const p=t/2.8;
+          const angle=-Math.PI/2+p*Math.PI*2;
+          const count=Math.min(ringDabs.length,Math.floor(p*ringDabs.length)+1);
+          for(let i=0;i<ringDabs.length;i++) ringDabs[i].visible=i<count;
+          faceMaterial.opacity=Math.min(1,t/1.9);
+          target.set(Math.cos(angle)*1.24,Math.sin(angle)*1.24,-0.12);
+          brushAngle=angle;
+          bristleMaterial.color.setHex(0xeab308);
+        } else {
+          ringDabs.forEach(dab=>dab.visible=true);
+          faceMaterial.opacity=1;
+
+          if(t<3.3) {
+            const p=(t-2.8)/0.5;
+            target.set(0+( -0.43)*p,-1.23+(0.34+1.23)*p,-0.12);
+            brushAngle=-0.35;
+            bristleMaterial.color.setHex(0x27251f);
+          } else if(t<3.75) {
+            target.set(-0.43,0.34,-0.12);
+            leftEye.material.opacity=Math.min(1,(t-3.3)/0.28);
+            brushAngle=0;
+            bristleMaterial.color.setHex(0x27251f);
+          } else if(t<4.2) {
+            const p=(t-3.75)/0.45;
+            target.set(-0.43+(0.86*p),0.34,-0.12);
+            leftEye.material.opacity=1;
+            brushAngle=0.2;
+          } else if(t<4.65) {
+            target.set(0.43,0.34,-0.12);
+            leftEye.material.opacity=1;
+            rightEye.material.opacity=Math.min(1,(t-4.2)/0.28);
+            brushAngle=0;
+          } else if(t<5.1) {
+            const p=(t-4.65)/0.45;
+            target.set(0.43+(-0.99*p),0.34+(-0.48*p),-0.12);
+            leftEye.material.opacity=1;
+            rightEye.material.opacity=1;
+            brushAngle=-0.55;
+          } else if(t<7.0) {
+            const p=(t-5.1)/1.9;
+            const x=-0.56+1.12*p;
+            const y=-0.14-1.12*p*(1-p);
+            target.set(x,y,-0.12);
+            leftEye.material.opacity=1;
+            rightEye.material.opacity=1;
+            const indexCount=smileGeometry.index ? smileGeometry.index.count : smileGeometry.attributes.position.count;
+            smileGeometry.setDrawRange(0,Math.floor(p*indexCount));
+            brushAngle=Math.atan2(-1.12*(1-2*p),1.12)-Math.PI/2;
+            bristleMaterial.color.setHex(0x27251f);
+          } else {
+            leftEye.material.opacity=1;
+            rightEye.material.opacity=1;
+            const indexCount=smileGeometry.index ? smileGeometry.index.count : smileGeometry.attributes.position.count;
+            smileGeometry.setDrawRange(0,indexCount);
+            const p=Math.min(1,(t-7.0)/0.7);
+            target.set(0.56+1.05*p,-0.14-0.95*p,-0.12);
+            brushAngle=-0.8;
+          }
+        }
+
+        brush.position.lerp(target,0.2);
+        brush.rotation.z += (brushAngle-brush.rotation.z)*0.16;
+        scene.rotation.y=Math.sin(t*0.65)*0.018;
+        scene.rotation.x=Math.sin(t*0.48)*0.009;
+        renderer.render(scene,camera);
+      }
+      requestAnimationFrame(animate);
+    })();
+
   </script>
 </body>
 </html>
