@@ -199,7 +199,7 @@
          * 6. Native MediaRecorder WebM export
          */
         window.addEventListener('load', () => {
-            const host = host.querySelector('#durga-cinematic-showcase');
+            const host = document.getElementById('durga-cinematic-showcase');
             const canvas = host && host.querySelector('#artCanvas');
             if (!host || !canvas) return;
             const ctx = canvas.getContext('2d', { alpha: false });
