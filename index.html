@@ -1069,6 +1069,7 @@
 
                 // Update timeline UI pill progress bar
                 progressBar.style.width = `${(t / TOTAL_DURATION) * 100}%`;
+                timelineContainer.setAttribute('aria-valuenow', String(Math.round(t)));
             }
 
             /**
@@ -1112,6 +1113,7 @@
              */
             function setPlayingState(play) {
                 isPlaying = play;
+                playPauseBtn.setAttribute('aria-label', isPlaying ? 'Pause animation' : 'Play animation');
                 if (isPlaying) {
                     playIcon.classList.add('hidden');
                     pauseIcon.classList.remove('hidden');
@@ -1137,6 +1139,18 @@
                 const rect = timelineContainer.getBoundingClientRect();
                 const ratio = Math.min(1, Math.max(0, (e.clientX - rect.left) / rect.width));
                 elapsedTime = ratio * TOTAL_DURATION;
+                renderScene(elapsedTime, 0);
+            });
+
+            timelineContainer.addEventListener('keydown', (e) => {
+                let nextTime = elapsedTime;
+                if (e.key === 'ArrowRight' || e.key === 'ArrowUp') nextTime = Math.min(TOTAL_DURATION, elapsedTime + (e.shiftKey ? 5 : 1));
+                else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') nextTime = Math.max(0, elapsedTime - (e.shiftKey ? 5 : 1));
+                else if (e.key === 'Home') nextTime = 0;
+                else if (e.key === 'End') nextTime = TOTAL_DURATION;
+                else return;
+                e.preventDefault();
+                elapsedTime = nextTime;
                 renderScene(elapsedTime, 0);
             });
 
