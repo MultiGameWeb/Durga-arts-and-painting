@@ -15,6 +15,9 @@
   <meta name="twitter:card" content="summary_large_image">
   <link rel="preconnect" href="https://raw.githubusercontent.com">
   <link rel="canonical" href="https://multigameweb.github.io/Durga-arts-and-painting/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
   <style>
     :root{--paper:#f8f5ef;--paper2:#f0ebe1;--ink:#252520;--muted:#6b695f;--line:#ded8cc;--orange:#d85e2b;--orangeDark:#a94622;--blue:#355c91;--green:#456b4e;--white:#fffefa;--shadow:0 22px 60px rgba(48,39,26,.12);--max:1180px}
     *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:88px}body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}body.lock{overflow:hidden}
@@ -60,6 +63,90 @@
     @media(prefers-reduced-motion:reduce){.gallery-item img{transition:none!important;transform:none!important}.gallery-item:hover img{transform:none!important}}
 
 
+  
+    /* Self-contained cinematic showcase: all styles are scoped to this section. */
+    #durga-cinematic-showcase {
+      position: relative; isolation: isolate;
+      width: min(var(--max), calc(100% - 32px));
+      height: clamp(440px, 48vw, 590px); min-height: 420px;
+      margin: 18px auto 34px; overflow: hidden;
+      border: 1px solid rgba(212,175,55,.24); border-radius: 24px;
+      background: #0d090a; color: #e8d59e;
+      box-shadow: 0 22px 60px rgba(0,0,0,.22);
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      user-select: none; -webkit-user-select: none;
+    }
+    #durga-cinematic-showcase * { box-sizing: border-box; }
+    #durga-cinematic-showcase #artCanvas { display:block; width:100%; height:100%; cursor:crosshair; }
+    #durga-cinematic-showcase .dac-toast {
+      position:absolute; z-index:4; top:16px; left:50%;
+      display:flex; align-items:center; gap:10px; max-width:calc(100% - 28px);
+      padding:9px 17px; border:1px solid rgba(212,175,55,.28); border-radius:999px;
+      background:rgba(18,12,14,.76); color:#f6e8c0;
+      box-shadow:0 10px 30px rgba(0,0,0,.4),inset 0 0 12px rgba(212,175,55,.08);
+      backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+      font:12px/1.3 Inter,ui-sans-serif,system-ui,sans-serif; letter-spacing:.04em;
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+      opacity:0; pointer-events:none; transform:translateX(-50%); transition:opacity .5s ease;
+    }
+    #durga-cinematic-showcase .dac-toast-dot { flex:0 0 7px; width:7px; height:7px; border-radius:50%; background:#d4af37; }
+    #durga-cinematic-showcase .dac-controls {
+      position:absolute; z-index:5; right:16px; bottom:16px;
+      display:flex; align-items:center; gap:8px; max-width:calc(100% - 24px);
+      padding:7px 10px; border:1px solid rgba(212,175,55,.28); border-radius:999px;
+      background:rgba(18,12,14,.78); color:#e8d59e;
+      box-shadow:0 10px 30px rgba(0,0,0,.55),inset 0 0 12px rgba(212,175,55,.08);
+      backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+    }
+    #durga-cinematic-showcase .dac-icon-btn {
+      display:grid; place-items:center; flex:0 0 32px; width:32px; height:32px;
+      padding:7px; border:0; border-radius:50%; background:transparent;
+      color:#e8d59e; cursor:pointer; transition:background .25s ease,color .25s ease,transform .25s ease;
+    }
+    #durga-cinematic-showcase .dac-icon-btn:hover,
+    #durga-cinematic-showcase .dac-export-btn:hover { background:rgba(212,175,55,.18); color:#f6e08c; transform:translateY(-1px); }
+    #durga-cinematic-showcase .dac-icon-btn:active,
+    #durga-cinematic-showcase .dac-export-btn:active { transform:scale(.96); }
+    #durga-cinematic-showcase .dac-icon-btn svg { width:16px; height:16px; fill:currentColor; }
+    #durga-cinematic-showcase .dac-icon-btn svg:not(#playIcon):not(#pauseIcon) {
+      fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round;
+    }
+    #durga-cinematic-showcase .hidden { display:none !important; }
+    #durga-cinematic-showcase .dac-timeline { display:flex; align-items:center; width:112px; height:24px; cursor:pointer; outline-offset:4px; }
+    #durga-cinematic-showcase .dac-track { position:relative; width:100%; height:4px; overflow:hidden; border-radius:999px; background:rgba(255,255,255,.16); }
+    #durga-cinematic-showcase #progressBar { width:0; height:100%; border-radius:inherit; background:linear-gradient(90deg,#e63946,#f4a261,#d4af37); }
+    #durga-cinematic-showcase .dac-divider { width:1px; height:17px; background:rgba(212,175,55,.28); }
+    #durga-cinematic-showcase .dac-export-btn {
+      display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      min-height:32px; padding:6px 10px; border:0; border-radius:999px;
+      background:transparent; color:#f3dca2; cursor:pointer;
+      font:700 10px/1 Inter,ui-sans-serif,system-ui,sans-serif;
+      letter-spacing:.12em; text-transform:uppercase; white-space:nowrap;
+      transition:background .25s ease,color .25s ease,transform .25s ease;
+    }
+    #durga-cinematic-showcase .dac-rec-dot { width:8px; height:8px; flex:0 0 8px; border-radius:50%; background:#e63946; }
+    #durga-cinematic-showcase .rec-dot { animation:dacPulseRec 1.2s infinite ease-in-out; }
+    @keyframes dacPulseRec { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.85)} }
+    #durga-cinematic-showcase button:focus-visible,
+    #durga-cinematic-showcase .dac-timeline:focus-visible { outline:2px solid #f6e08c; outline-offset:3px; }
+    @media(max-width:720px) {
+      #durga-cinematic-showcase { width:calc(100% - 24px); height:440px; min-height:390px; margin:14px auto 28px; border-radius:18px; }
+      #durga-cinematic-showcase .dac-controls { right:10px; bottom:10px; gap:5px; padding:6px 8px; }
+      #durga-cinematic-showcase .dac-timeline { width:58px; }
+      #durga-cinematic-showcase .dac-export-btn { gap:5px; padding:6px 7px; font-size:9px; letter-spacing:.07em; }
+      #durga-cinematic-showcase .dac-toast { top:12px; font-size:11px; }
+    }
+    @media(max-width:380px) {
+      #durga-cinematic-showcase { height:410px; }
+      #durga-cinematic-showcase .dac-timeline { width:42px; }
+      #durga-cinematic-showcase .dac-controls { gap:3px; }
+    }
+    @media(prefers-reduced-motion:reduce) {
+      #durga-cinematic-showcase .dac-icon-btn,
+      #durga-cinematic-showcase .dac-export-btn,
+      #durga-cinematic-showcase .dac-toast { transition:none; }
+    }
+
   </style>
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"ProfessionalService","name":"Durga Arts & Paintings","telephone":"+918008157900","areaServed":{"@type":"City","name":"Hyderabad"},"description":"School wall murals, play school paintings, interior wall art and canvas paintings in Hyderabad.","url":"https://multigameweb.github.io/Durga-arts-and-painting/"}
@@ -76,6 +163,1090 @@
     </div>
     <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation"><a href="#services">Services</a><a href="#work">Our Work</a><a href="#about">About</a><a href="#process">How We Work</a><a href="#contact">Contact</a><a class="btn primary" href="https://wa.me/918008157900?text=Hello%20Durga%20Arts%2C%20I%20would%20like%20to%20discuss%20a%20painting%20project." target="_blank" rel="noopener">Let's talk ↗</a></nav>
   </header>
+
+<section id="durga-cinematic-showcase" aria-label="Durga Arts cinematic art showcase">
+  <canvas id="artCanvas" role="img" aria-label="Cinematic animated painting with rich brush strokes, a golden lotus mandala, trishul motif and Durga Arts title"></canvas>
+  <div id="toastBox" class="dac-toast" role="status" aria-live="polite">
+    <span class="dac-toast-dot"></span><span id="toastText">Preparing artwork...</span>
+  </div>
+  <div id="controlPill" class="dac-controls" aria-label="Animation controls">
+    <button id="playPauseBtn" class="dac-icon-btn" type="button" title="Play / Pause" aria-label="Pause animation">
+      <svg id="pauseIcon" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+      <svg id="playIcon" class="hidden" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.14v13.72a1 1 0 001.52.85l11-6.86a1 1 0 000-1.7l-11-6.86A1 1 0 008 5.14z"/></svg>
+    </button>
+    <button id="replayBtn" class="dac-icon-btn" type="button" title="Replay sequence" aria-label="Replay animation">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4v5h5M20 20v-5h-5M20.49 9A9 9 0 005.64 5.64L4 7m16 10l-1.64 1.36A9 9 0 013.51 15"/></svg>
+    </button>
+    <div id="timelineContainer" class="dac-timeline" title="Click to scrub timeline" role="slider" aria-label="Animation timeline" aria-valuemin="0" aria-valuemax="18" aria-valuenow="0" tabindex="0">
+      <div class="dac-track"><div id="progressBar"></div></div>
+    </div>
+    <span class="dac-divider" aria-hidden="true"></span>
+    <button id="exportBtn" class="dac-export-btn" type="button" title="Record and export the 18-second animation as WebM">
+      <span id="recIndicator" class="dac-rec-dot"></span><span id="exportLabel">Export WebM</span>
+    </button>
+  </div>
+</section>
+
+<script>
+        /**
+         * DURGA ARTS & PAINTING — CINEMATIC ART SHOWCASE ENGINE
+         * Choreographed 18-second seamless loop combining:
+         * 1. Watercolor ambient blooms & velvet canvas grain
+         * 2. Multi-bristle impasto oil brushstrokes with specular wet-paint sheen
+         * 3. Progressive golden sacred geometry (Lotus Mandala + Trishul & Divine Eye)
+         * 4. 24k gold-leaf floating particles & interactive cursor parallax
+         * 5. Luxury calligraphic typography reveal ("Durga Arts & Painting")
+         * 6. Native MediaRecorder WebM export
+         */
+        window.addEventListener('load', () => {
+            const host = host.querySelector('#durga-cinematic-showcase');
+            const canvas = host && host.querySelector('#artCanvas');
+            if (!host || !canvas) return;
+            const ctx = canvas.getContext('2d', { alpha: false });
+
+            // Offscreen buffer for static/accumulated impasto strokes & canvas grain
+            const strokeBuffer = document.createElement('canvas');
+            const sCtx = strokeBuffer.getContext('2d');
+
+            // UI Elements
+            const playPauseBtn = host.querySelector('#playPauseBtn');
+            const playIcon = host.querySelector('#playIcon');
+            const pauseIcon = host.querySelector('#pauseIcon');
+            const replayBtn = host.querySelector('#replayBtn');
+            const exportBtn = host.querySelector('#exportBtn');
+            const exportLabel = host.querySelector('#exportLabel');
+            const recIndicator = host.querySelector('#recIndicator');
+            const progressBar = host.querySelector('#progressBar');
+            const timelineContainer = host.querySelector('#timelineContainer');
+            const toastBox = host.querySelector('#toastBox');
+            const toastText = host.querySelector('#toastText');
+
+            // Timeline Configuration (18 seconds seamless loop)
+            const TOTAL_DURATION = 18.0; // seconds
+            let elapsedTime = 0;
+            let lastTimestamp = null;
+            let isPlaying = true;
+            let isRecording = false;
+            let mediaRecorder = null;
+            let recordedChunks = [];
+
+            // Responsive Dimensions & DPR
+            let width = 0;
+            let height = 0;
+            let dpr = 1;
+            let minDim = 0;
+
+            // Interactive Pointer Parallax
+            const pointer = { x: 0.5, y: 0.5, targetX: 0.5, targetY: 0.5 };
+
+            // Color Palette Tokens
+            const PALETTE = {
+                bg: '#0d090a',
+                gold: '#d4af37',
+                goldLight: '#fff0b3',
+                goldDeep: '#99731b',
+                crimson: '#e63946',
+                saffron: '#f4a261',
+                teal: '#2a9d8f',
+                indigo: '#264653',
+                royalBlue: '#1d3557',
+                ivory: '#fdf6e7'
+            };
+
+            // Scene Entities
+            let brushStrokes = [];
+            let goldParticles = [];
+            let watercolorBlooms = [];
+            let grainPattern = null;
+
+            /**
+             * Display subtle non-blocking toast notification
+             */
+            let toastTimer = null;
+            function showToast(msg, duration = 3200) {
+                toastText.textContent = msg;
+                toastBox.style.opacity = '1';
+                clearTimeout(toastTimer);
+                toastTimer = setTimeout(() => {
+                    toastBox.style.opacity = '0';
+                }, duration);
+            }
+
+            /**
+             * Generate subtle woven canvas texture pattern
+             */
+            function createCanvasGrain() {
+                const pCanvas = document.createElement('canvas');
+                pCanvas.width = 96;
+                pCanvas.height = 96;
+                const pCtx = pCanvas.getContext('2d');
+                pCtx.fillStyle = 'rgba(255, 245, 230, 0.015)';
+                for (let y = 0; y < 96; y += 2) {
+                    for (let x = 0; x < 96; x += 2) {
+                        if ((x + y) % 4 === 0) {
+                            pCtx.fillRect(x, y, 1, 1);
+                        }
+                    }
+                }
+                // Cross-hatch linen threads
+                pCtx.strokeStyle = 'rgba(212, 175, 55, 0.018)';
+                pCtx.lineWidth = 0.5;
+                pCtx.beginPath();
+                pCtx.moveTo(0, 48); pCtx.lineTo(96, 48);
+                pCtx.moveTo(48, 0); pCtx.lineTo(48, 96);
+                pCtx.stroke();
+                return ctx.createPattern(pCanvas, 'repeat');
+            }
+
+            /**
+             * Resize handler adapting canvas and regenerating proportional art coordinates
+             */
+            function resize() {
+                dpr = Math.min(window.devicePixelRatio || 1, 2);
+                width = Math.max(1, host.clientWidth);
+                height = Math.max(1, host.clientHeight);
+                minDim = Math.min(width, height);
+
+                canvas.width = Math.floor(width * dpr);
+                canvas.height = Math.floor(height * dpr);
+                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+                strokeBuffer.width = Math.floor(width * dpr);
+                strokeBuffer.height = Math.floor(height * dpr);
+                sCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+                grainPattern = createCanvasGrain();
+                initChoreography();
+            }
+
+            /**
+             * Evaluate Cubic Bezier point at t in [0, 1]
+             */
+            function getBezierPoint(t, p0, p1, p2, p3) {
+                const u = 1 - t;
+                const tt = t * t;
+                const uu = u * u;
+                const uuu = uu * u;
+                const ttt = tt * t;
+                return {
+                    x: uuu * p0.x + 3 * uu * t * p1.x + 3 * u * tt * p2.x + ttt * p3.x,
+                    y: uuu * p0.y + 3 * uu * t * p1.y + 3 * u * tt * p2.y + ttt * p3.y
+                };
+            }
+
+            /**
+             * Evaluate Cubic Bezier tangent at t
+             */
+            function getBezierTangent(t, p0, p1, p2, p3) {
+                const u = 1 - t;
+                const dx = 3 * u * u * (p1.x - p0.x) + 6 * u * t * (p2.x - p1.x) + 3 * t * t * (p3.x - p2.x);
+                const dy = 3 * u * u * (p1.y - p0.y) + 6 * u * t * (p2.y - p1.y) + 3 * t * t * (p3.y - p2.y);
+                return Math.atan2(dy, dx);
+            }
+
+            /**
+             * Easing utilities for cinematic motion
+             */
+            const Ease = {
+                inOutCubic: t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2,
+                outQuart: t => 1 - Math.pow(1 - t, 4),
+                outExpo: t => t === 1 ? 1 : 1 - Math.pow(2, -10 * t),
+                inOutSine: t => -(Math.cos(Math.PI * t) - 1) / 2
+            };
+
+            /**
+             * Initialize choreographed brushstrokes, blooms, and gold-leaf particles
+             */
+            function initChoreography() {
+                const cx = width * 0.5;
+                const cy = height * 0.5;
+
+                // 1. Ambient Watercolor Blooms (radiate outward during phases 1-3)
+                watercolorBlooms = [
+                    { x: cx - width * 0.22, y: cy - height * 0.14, maxR: minDim * 0.58, color: 'rgba(230, 57, 70, 0.16)', start: 0.2, dur: 6.5 },
+                    { x: cx + width * 0.24, y: cy + height * 0.12, maxR: minDim * 0.62, color: 'rgba(42, 157, 143, 0.15)', start: 1.0, dur: 6.8 },
+                    { x: cx + width * 0.12, y: cy - height * 0.22, maxR: minDim * 0.52, color: 'rgba(244, 162, 97, 0.14)', start: 1.8, dur: 6.2 },
+                    { x: cx - width * 0.16, y: cy + height * 0.22, maxR: minDim * 0.60, color: 'rgba(29, 53, 87, 0.24)', start: 0.6, dur: 7.0 },
+                    { x: cx, y: cy, maxR: minDim * 0.48, color: 'rgba(212, 175, 55, 0.12)', start: 4.2, dur: 6.0 }
+                ];
+
+                // 2. Choreographed Impasto Oil Brushstrokes
+                // Each stroke has multi-bristle offsets, highlight ridge, and timing window
+                const strokeConfigs = [
+                    // Deep Royal Indigo underpainting sweeps
+                    {
+                        start: 0.3, dur: 2.3, width: minDim * 0.11,
+                        baseColor: '#192f4a', midColor: '#264973', highColor: '#4c7cb3',
+                        p0: { x: -width * 0.08, y: height * 0.72 },
+                        p1: { x: width * 0.28, y: height * 0.18 },
+                        p2: { x: width * 0.68, y: height * 0.85 },
+                        p3: { x: width * 1.08, y: height * 0.32 }
+                    },
+                    // Peacock Teal sweeping diagonal
+                    {
+                        start: 0.9, dur: 2.2, width: minDim * 0.095,
+                        baseColor: '#1a6b61', midColor: '#2a9d8f', highColor: '#6be0d1',
+                        p0: { x: width * 1.06, y: height * 0.78 },
+                        p1: { x: width * 0.65, y: height * 0.72 },
+                        p2: { x: width * 0.38, y: height * 0.22 },
+                        p3: { x: -width * 0.06, y: height * 0.28 }
+                    },
+                    // Vermilion Crimson expressive arc (Durga Shakti energy)
+                    {
+                        start: 1.5, dur: 2.4, width: minDim * 0.105,
+                        baseColor: '#9e1924', midColor: '#e63946', highColor: '#ff858f',
+                        p0: { x: width * 0.12, y: height * 0.96 },
+                        p1: { x: width * 0.18, y: height * 0.35 },
+                        p2: { x: width * 0.78, y: height * 0.12 },
+                        p3: { x: width * 0.92, y: height * 0.56 }
+                    },
+                    // Warm Saffron luminous crescent
+                    {
+                        start: 2.1, dur: 2.2, width: minDim * 0.085,
+                        baseColor: '#b8631d', midColor: '#f4a261', highColor: '#ffd4a8',
+                        p0: { x: width * 0.88, y: height * 0.12 },
+                        p1: { x: width * 0.72, y: height * 0.62 },
+                        p2: { x: width * 0.26, y: height * 0.78 },
+                        p3: { x: width * 0.08, y: height * 0.44 }
+                    },
+                    // Secondary Crimson & Teal accent ribbons framing center
+                    {
+                        start: 2.7, dur: 2.0, width: minDim * 0.06,
+                        baseColor: '#b51d29', midColor: '#e63946', highColor: '#ff9ea6',
+                        p0: { x: width * 0.22, y: height * 0.14 },
+                        p1: { x: width * 0.48, y: height * 0.06 },
+                        p2: { x: width * 0.82, y: height * 0.34 },
+                        p3: { x: width * 0.76, y: height * 0.74 }
+                    },
+                    {
+                        start: 3.1, dur: 1.9, width: minDim * 0.055,
+                        baseColor: '#195e56', midColor: '#2a9d8f', highColor: '#8cf2e5',
+                        p0: { x: width * 0.78, y: height * 0.88 },
+                        p1: { x: width * 0.46, y: height * 0.94 },
+                        p2: { x: width * 0.16, y: height * 0.64 },
+                        p3: { x: width * 0.24, y: height * 0.25 }
+                    },
+                    // Rich 24K Gold impasto flourish strokes
+                    {
+                        start: 3.5, dur: 2.1, width: minDim * 0.036,
+                        baseColor: '#8a6514', midColor: '#d4af37', highColor: '#fff3bd',
+                        p0: { x: width * 0.16, y: height * 0.68 },
+                        p1: { x: width * 0.36, y: height * 0.86 },
+                        p2: { x: width * 0.66, y: height * 0.84 },
+                        p3: { x: width * 0.85, y: height * 0.64 }
+                    },
+                    {
+                        start: 3.8, dur: 2.0, width: minDim * 0.032,
+                        baseColor: '#8a6514', midColor: '#d4af37', highColor: '#fff3bd',
+                        p0: { x: width * 0.84, y: height * 0.34 },
+                        p1: { x: width * 0.64, y: height * 0.14 },
+                        p2: { x: width * 0.34, y: height * 0.16 },
+                        p3: { x: width * 0.16, y: height * 0.36 }
+                    }
+                ];
+
+                // Pre-generate bristle structures for deterministic rendering at any scrubbed timestamp
+                brushStrokes = strokeConfigs.map((cfg, idx) => {
+                    const bristleCount = 26;
+                    const bristles = [];
+                    for (let b = 0; b < bristleCount; b++) {
+                        const norm = (b / (bristleCount - 1)) * 2 - 1; // -1 to 1
+                        // Deterministic pseudo-random thickness & shade variation
+                        const seed = Math.sin((idx + 1) * 97 + b * 31) * 10000;
+                        const rand = seed - Math.floor(seed);
+                        bristles.push({
+                            offset: norm,
+                            thicknessFactor: 0.055 + rand * 0.065,
+                            shade: rand, // 0 = base, 0.5 = mid, 1 = highlight ridge
+                            taperStart: rand * 0.06,
+                            taperEnd: 1 - rand * 0.08
+                        });
+                    }
+                    return { ...cfg, bristles, renderedProgress: 0 };
+                });
+
+                // 3. Floating Gold-Leaf Dust Particles
+                const particleCount = Math.min(110, Math.floor((width * height) / 14000));
+                goldParticles = [];
+                for (let i = 0; i < particleCount; i++) {
+                    goldParticles.push({
+                        x: Math.random() * width,
+                        y: Math.random() * height,
+                        size: 1.1 + Math.random() * 2.8,
+                        speedY: -(6 + Math.random() * 14),
+                        speedX: (Math.random() - 0.5) * 8,
+                        phase: Math.random() * Math.PI * 2,
+                        twinkleSpeed: 1.5 + Math.random() * 2.5,
+                        depth: 0.3 + Math.random() * 0.7,
+                        isLeafFlake: Math.random() > 0.65
+                    });
+                }
+            }
+
+            /**
+             * Render a single multi-bristle impasto brushstroke up to progress p in [0, 1]
+             */
+            function drawImpastoStroke(targetCtx, stroke, progress) {
+                if (progress <= 0) return;
+                const p = Ease.inOutCubic(Math.min(1, progress));
+                const steps = 95;
+                const maxStep = Math.floor(steps * p);
+                if (maxStep < 2) return;
+
+                targetCtx.save();
+                targetCtx.lineCap = 'round';
+                targetCtx.lineJoin = 'round';
+
+                // Subtle drop shadow underneath thick oil paint
+                targetCtx.beginPath();
+                for (let i = 0; i <= maxStep; i++) {
+                    const t = i / steps;
+                    const pt = getBezierPoint(t, stroke.p0, stroke.p1, stroke.p2, stroke.p3);
+                    if (i === 0) targetCtx.moveTo(pt.x + 4, pt.y + 6);
+                    else targetCtx.lineTo(pt.x + 4, pt.y + 6);
+                }
+                targetCtx.strokeStyle = 'rgba(0, 0, 0, 0.38)';
+                targetCtx.lineWidth = stroke.width * 0.92;
+                targetCtx.stroke();
+
+                // Draw individual bristle ridges
+                for (let b = 0; b < stroke.bristles.length; b++) {
+                    const br = stroke.bristles[b];
+                    const startStep = Math.floor(br.taperStart * steps);
+                    const endStep = Math.min(maxStep, Math.floor(br.taperEnd * steps));
+                    if (endStep <= startStep + 1) continue;
+
+                    targetCtx.beginPath();
+                    for (let i = startStep; i <= endStep; i++) {
+                        const t = i / steps;
+                        const pt = getBezierPoint(t, stroke.p0, stroke.p1, stroke.p2, stroke.p3);
+                        const ang = getBezierTangent(t, stroke.p0, stroke.p1, stroke.p2, stroke.p3);
+                        // Taper width smoothly at start and end of brush lift
+                        const envelope = Math.sin(Math.PI * Math.pow(t, 0.85));
+                        const radialOffset = br.offset * (stroke.width * 0.48) * (0.35 + 0.65 * envelope);
+
+                        const bx = pt.x - Math.sin(ang) * radialOffset;
+                        const by = pt.y + Math.cos(ang) * radialOffset;
+
+                        if (i === startStep) targetCtx.moveTo(bx, by);
+                        else targetCtx.lineTo(bx, by);
+                    }
+
+                    // Select oil pigment shade + wet specular ridge highlight
+                    if (br.shade > 0.82) {
+                        targetCtx.strokeStyle = stroke.highColor;
+                        targetCtx.globalAlpha = 0.55;
+                    } else if (br.shade > 0.35) {
+                        targetCtx.strokeStyle = stroke.midColor;
+                        targetCtx.globalAlpha = 0.88;
+                    } else {
+                        targetCtx.strokeStyle = stroke.baseColor;
+                        targetCtx.globalAlpha = 0.92;
+                    }
+
+                    targetCtx.lineWidth = Math.max(1.2, stroke.width * br.thicknessFactor);
+                    targetCtx.stroke();
+                }
+
+                // Wet paint glossy sheen line along upper edge of stroke
+                targetCtx.beginPath();
+                for (let i = 2; i <= maxStep - 2; i++) {
+                    const t = i / steps;
+                    const pt = getBezierPoint(t, stroke.p0, stroke.p1, stroke.p2, stroke.p3);
+                    const ang = getBezierTangent(t, stroke.p0, stroke.p1, stroke.p2, stroke.p3);
+                    const bx = pt.x - Math.sin(ang) * (stroke.width * 0.22);
+                    const by = pt.y + Math.cos(ang) * (stroke.width * 0.22);
+                    if (i === 2) targetCtx.moveTo(bx, by);
+                    else targetCtx.lineTo(bx, by);
+                }
+                targetCtx.strokeStyle = 'rgba(255, 250, 235, 0.24)';
+                targetCtx.globalAlpha = 1;
+                targetCtx.lineWidth = Math.max(1.5, stroke.width * 0.045);
+                targetCtx.stroke();
+
+                targetCtx.restore();
+            }
+
+            /**
+             * Helper to draw a progressive stroke path with dashed lineDash offset
+             */
+            function drawProgressivePath(drawFn, progress, lineWidth, strokeStyle, glowBlur = 12) {
+                if (progress <= 0) return;
+                const p = Ease.inOutCubic(Math.min(1, progress));
+                ctx.save();
+                ctx.beginPath();
+                drawFn(ctx, p);
+                ctx.strokeStyle = strokeStyle;
+                ctx.lineWidth = lineWidth;
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                if (glowBlur > 0) {
+                    ctx.shadowColor = PALETTE.gold;
+                    ctx.shadowBlur = glowBlur;
+                }
+                ctx.stroke();
+                ctx.restore();
+            }
+
+            /**
+             * Phase 2 (4.2s - 10.5s): Sacred Geometric Lotus Mandala + Trishul & Divine Eye Motif
+             */
+            function renderSacredMotif(t, cx, cy) {
+                const motifStart = 4.2;
+                if (t < motifStart) return;
+
+                const radius = minDim * 0.23;
+                // Gentle breathing scale after drawn
+                const breath = t > 9.0 ? 1 + Math.sin((t - 9.0) * 1.4) * 0.012 : 1;
+
+                ctx.save();
+                ctx.translate(cx, cy - minDim * 0.03);
+                ctx.scale(breath, breath);
+
+                // Soft radial golden halo behind sacred geometry
+                const haloAlpha = Math.min(0.32, Math.max(0, (t - motifStart) / 3.5) * 0.32);
+                const halo = ctx.createRadialGradient(0, 0, radius * 0.05, 0, 0, radius * 1.45);
+                halo.addColorStop(0, `rgba(212, 175, 55, ${haloAlpha})`);
+                halo.addColorStop(0.55, `rgba(230, 57, 70, ${haloAlpha * 0.45})`);
+                halo.addColorStop(1, 'rgba(13, 9, 10, 0)');
+                ctx.fillStyle = halo;
+                ctx.beginPath();
+                ctx.arc(0, 0, radius * 1.45, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Step A: Concentric Sacred Geometry Circles (4.2s -> 6.0s)
+                const circleProg = Math.min(1, Math.max(0, (t - 4.2) / 1.8));
+                if (circleProg > 0) {
+                    const p = Ease.outQuart(circleProg);
+                    ctx.save();
+                    ctx.strokeStyle = 'rgba(212, 175, 55, 0.65)';
+                    ctx.shadowColor = PALETTE.gold;
+                    ctx.shadowBlur = 14;
+
+                    // Outer mandala ring
+                    ctx.lineWidth = 1.6;
+                    ctx.beginPath();
+                    ctx.arc(0, 0, radius * 1.05, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * p);
+                    ctx.stroke();
+
+                    // Dotted inner ring
+                    ctx.lineWidth = 1.0;
+                    ctx.setLineDash([4, 6]);
+                    ctx.beginPath();
+                    ctx.arc(0, 0, radius * 0.92, Math.PI / 2, Math.PI / 2 + Math.PI * 2 * p);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+                    ctx.restore();
+                }
+
+                // Step B: 12-Petal Sacred Lotus Mandala (4.9s -> 7.6s)
+                const petalProg = Math.min(1, Math.max(0, (t - 4.9) / 2.7));
+                if (petalProg > 0) {
+                    const petals = 12;
+                    const pEase = Ease.inOutCubic(petalProg);
+                    ctx.save();
+                    ctx.strokeStyle = PALETTE.goldLight;
+                    ctx.fillStyle = `rgba(212, 175, 55, ${0.06 * pEase})`;
+                    ctx.lineWidth = 1.35;
+                    ctx.shadowColor = PALETTE.gold;
+                    ctx.shadowBlur = 10;
+
+                    for (let i = 0; i < petals; i++) {
+                        // Staggered petal bloom
+                        const localP = Math.min(1, Math.max(0, (pEase * 1.35) - (i / petals) * 0.35));
+                        if (localP <= 0) continue;
+
+                        const angle = (i * Math.PI * 2) / petals - Math.PI / 2;
+                        ctx.save();
+                        ctx.rotate(angle);
+
+                        const pLen = radius * 0.88 * localP;
+                        const pWid = radius * 0.24 * localP;
+
+                        ctx.beginPath();
+                        ctx.moveTo(0, -radius * 0.18);
+                        ctx.bezierCurveTo(
+                            pWid, -radius * 0.42 * localP,
+                            pWid * 0.85, -pLen * 0.82,
+                            0, -pLen
+                        );
+                        ctx.bezierCurveTo(
+                            -pWid * 0.85, -pLen * 0.82,
+                            -pWid, -radius * 0.42 * localP,
+                            0, -radius * 0.18
+                        );
+                        ctx.fill();
+                        ctx.stroke();
+                        ctx.restore();
+                    }
+                    ctx.restore();
+                }
+
+                // Step C: Artistic Trishul (Trident) Calligraphy Line (6.0s -> 8.5s)
+                const trishulProg = Math.min(1, Math.max(0, (t - 6.0) / 2.5));
+                if (trishulProg > 0) {
+                    const tp = Ease.inOutCubic(trishulProg);
+                    ctx.save();
+                    ctx.strokeStyle = PALETTE.goldLight;
+                    ctx.shadowColor = '#ffcf4d';
+                    ctx.shadowBlur = 18;
+                    ctx.lineCap = 'round';
+                    ctx.lineJoin = 'round';
+
+                    // Central Staff & Spire
+                    const staffTop = -radius * 1.24;
+                    const staffBot = radius * 1.15;
+                    const currTop = staffBot - (staffBot - staffTop) * tp;
+                    ctx.lineWidth = 2.6;
+                    ctx.beginPath();
+                    ctx.moveTo(0, staffBot);
+                    ctx.lineTo(0, currTop);
+                    ctx.stroke();
+
+                    // Spearhead tip at top
+                    if (tp > 0.75) {
+                        const tipP = (tp - 0.75) / 0.25;
+                        ctx.fillStyle = PALETTE.goldLight;
+                        ctx.beginPath();
+                        ctx.moveTo(0, staffTop - radius * 0.12 * tipP);
+                        ctx.lineTo(radius * 0.055 * tipP, staffTop + radius * 0.08 * tipP);
+                        ctx.lineTo(0, staffTop + radius * 0.03 * tipP);
+                        ctx.lineTo(-radius * 0.055 * tipP, staffTop + radius * 0.08 * tipP);
+                        ctx.closePath();
+                        ctx.fill();
+                    }
+
+                    // Left & Right Curved Prongs of Trishul
+                    if (tp > 0.35) {
+                        const prongP = Ease.outQuart((tp - 0.35) / 0.65);
+                        const baseY = -radius * 0.42;
+                        ctx.lineWidth = 2.2;
+
+                        [-1, 1].forEach(dir => {
+                            ctx.beginPath();
+                            ctx.moveTo(0, baseY);
+                            const cp1x = dir * radius * 0.38 * prongP;
+                            const cp1y = baseY - radius * 0.04 * prongP;
+                            const cp2x = dir * radius * 0.44 * prongP;
+                            const cp2y = baseY - radius * 0.42 * prongP;
+                            const endX = dir * radius * 0.25 * prongP;
+                            const endY = baseY - radius * 0.66 * prongP;
+                            ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, endX, endY);
+                            ctx.stroke();
+                        });
+                    }
+                    ctx.restore();
+                }
+
+                // Step D: Divine Third Eye / Devi Eye Motif at Center (7.2s -> 9.6s)
+                const eyeProg = Math.min(1, Math.max(0, (t - 7.2) / 2.4));
+                if (eyeProg > 0) {
+                    const ep = Ease.outExpo(eyeProg);
+                    const eyeW = radius * 0.42 * ep;
+                    const eyeH = radius * 0.19 * ep;
+
+                    ctx.save();
+                    // Dark velvet backing inside eye so lines pop cleanly
+                    ctx.fillStyle = 'rgba(13, 9, 10, 0.85)';
+                    ctx.beginPath();
+                    ctx.moveTo(-eyeW, 0);
+                    ctx.quadraticCurveTo(0, -eyeH * 1.45, eyeW, 0);
+                    ctx.quadraticCurveTo(0, eyeH * 1.45, -eyeW, 0);
+                    ctx.fill();
+
+                    // Golden Almond Eye Contours
+                    ctx.strokeStyle = PALETTE.goldLight;
+                    ctx.lineWidth = 2.2;
+                    ctx.shadowColor = PALETTE.gold;
+                    ctx.shadowBlur = 16;
+                    ctx.stroke();
+
+                    // Vermilion Crimson Iris & Tilak Bindu
+                    if (ep > 0.4) {
+                        const irisP = (ep - 0.4) / 0.6;
+                        ctx.beginPath();
+                        ctx.arc(0, 0, eyeH * 0.62 * irisP, 0, Math.PI * 2);
+                        ctx.fillStyle = PALETTE.crimson;
+                        ctx.fill();
+                        ctx.lineWidth = 1.4;
+                        ctx.strokeStyle = PALETTE.goldLight;
+                        ctx.stroke();
+
+                        // Glowing Gold Pupil Spark
+                        ctx.beginPath();
+                        ctx.arc(0, 0, eyeH * 0.22 * irisP, 0, Math.PI * 2);
+                        ctx.fillStyle = PALETTE.goldLight;
+                        ctx.fill();
+
+                        // Sacred Crimson Bindi / Tilak above eye
+                        ctx.beginPath();
+                        ctx.arc(0, -eyeH * 1.75, radius * 0.032 * irisP, 0, Math.PI * 2);
+                        ctx.fillStyle = PALETTE.crimson;
+                        ctx.fill();
+                    }
+                    ctx.restore();
+                }
+
+                ctx.restore();
+            }
+
+            /**
+             * Phase 3: Floating 24k Gold-Leaf Particles & Luminous Dust
+             */
+            function renderGoldParticles(t, dt) {
+                const globalAlpha = Math.min(1, Math.max(0, (t - 1.2) / 2.5));
+                if (globalAlpha <= 0) return;
+
+                ctx.save();
+                for (let i = 0; i < goldParticles.length; i++) {
+                    const p = goldParticles[i];
+                    if (isPlaying && dt > 0) {
+                        p.y += p.speedY * dt * p.depth;
+                        p.x += (p.speedX + Math.sin(t * 1.2 + p.phase) * 7) * dt * p.depth;
+
+                        // Wrap seamlessly
+                        if (p.y < -15) { p.y = height + 15; p.x = Math.random() * width; }
+                        if (p.x < -15) p.x = width + 15;
+                        if (p.x > width + 15) p.x = -15;
+                    }
+
+                    const twinkle = 0.45 + 0.55 * Math.sin(t * p.twinkleSpeed + p.phase);
+                    const alpha = globalAlpha * twinkle * (0.4 + p.depth * 0.6);
+
+                    // Subtle parallax offset
+                    const px = p.x + (pointer.x - 0.5) * 28 * p.depth;
+                    const py = p.y + (pointer.y - 0.5) * 28 * p.depth;
+
+                    ctx.save();
+                    ctx.translate(px, py);
+                    ctx.globalAlpha = alpha;
+
+                    if (p.isLeafFlake) {
+                        // Rotating 24K gold leaf flake
+                        ctx.rotate(t * 0.8 + p.phase);
+                        ctx.scale(Math.cos(t * 1.6 + p.phase), 1);
+                        ctx.fillStyle = PALETTE.goldLight;
+                        ctx.shadowColor = PALETTE.gold;
+                        ctx.shadowBlur = 8;
+                        ctx.fillRect(-p.size, -p.size * 0.6, p.size * 2, p.size * 1.2);
+                    } else {
+                        // Soft glowing golden dust orb
+                        const grad = ctx.createRadialGradient(0, 0, 0, 0, 0, p.size * 2.4);
+                        grad.addColorStop(0, '#fff7d6');
+                        grad.addColorStop(0.4, 'rgba(212, 175, 55, 0.85)');
+                        grad.addColorStop(1, 'rgba(212, 175, 55, 0)');
+                        ctx.fillStyle = grad;
+                        ctx.beginPath();
+                        ctx.arc(0, 0, p.size * 2.4, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                    ctx.restore();
+                }
+                ctx.restore();
+            }
+
+            /**
+             * Phase 4 (8.8s - 16.5s): Luxury Typography & Calligraphic Brand Reveal
+             */
+            function renderTypographyReveal(t, cx, cy) {
+                const textStart = 8.8;
+                if (t < textStart) return;
+
+                const revealProg = Math.min(1, (t - textStart) / 2.2);
+                const easeP = Ease.outQuart(revealProg);
+
+                // Responsive font sizing
+                const mainSize = Math.max(30, Math.min(width * 0.068, 86));
+                const subSize = Math.max(13, Math.min(width * 0.019, 23));
+                const anchorY = cy + minDim * 0.27;
+
+                ctx.save();
+
+                // Dark velvet scrim behind title for high gallery legibility
+                const scrimGrad = ctx.createRadialGradient(cx, anchorY, 10, cx, anchorY, width * 0.44);
+                scrimGrad.addColorStop(0, `rgba(13, 9, 10, ${0.78 * easeP})`);
+                scrimGrad.addColorStop(0.65, `rgba(13, 9, 10, ${0.42 * easeP})`);
+                scrimGrad.addColorStop(1, 'rgba(13, 9, 10, 0)');
+                ctx.fillStyle = scrimGrad;
+                ctx.fillRect(0, anchorY - mainSize * 1.6, width, mainSize * 3.4);
+
+                // Ornamental Golden Divider Line expanding outward
+                const lineHalfW = Math.min(width * 0.26, 230) * easeP;
+                const lineY = anchorY - mainSize * 0.72;
+                ctx.strokeStyle = `rgba(212, 175, 55, ${0.85 * easeP})`;
+                ctx.lineWidth = 1.3;
+                ctx.beginPath();
+                ctx.moveTo(cx - lineHalfW, lineY);
+                ctx.lineTo(cx + lineHalfW, lineY);
+                ctx.stroke();
+
+                // Center diamond jewel on divider line
+                if (easeP > 0.2) {
+                    ctx.fillStyle = PALETTE.goldLight;
+                    ctx.save();
+                    ctx.translate(cx, lineY);
+                    ctx.rotate(Math.PI / 4);
+                    ctx.fillRect(-3.5, -3.5, 7, 7);
+                    ctx.restore();
+                }
+
+                // Main Brand Title: "DURGA ARTS & PAINTING"
+                const slideY = (1 - easeP) * 22;
+                ctx.globalAlpha = easeP;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.font = `700 ${mainSize}px "Cinzel Decorative", serif`;
+
+                // Metallic Gold Gradient Fill
+                const textGrad = ctx.createLinearGradient(cx - width * 0.3, anchorY - mainSize * 0.5, cx + width * 0.3, anchorY + mainSize * 0.5);
+                textGrad.addColorStop(0, '#c89d28');
+                textGrad.addColorStop(0.35, '#fff0b3');
+                textGrad.addColorStop(0.5, '#d4af37');
+                textGrad.addColorStop(0.75, '#ffea9f');
+                textGrad.addColorStop(1, '#b8891e');
+
+                // Deep shadow for 3D gallery embossing
+                ctx.shadowColor = 'rgba(0, 0, 0, 0.9)';
+                ctx.shadowBlur = 18;
+                ctx.shadowOffsetY = 5;
+                ctx.fillStyle = textGrad;
+                ctx.fillText('Durga Arts & Painting', cx, anchorY + slideY);
+
+                // Animated Light Shimmer Sweep across the gold lettering (10.8s -> 13.5s)
+                if (t > 10.6 && t < 14.0) {
+                    const sweepP = (t - 10.6) / 3.4;
+                    const sweepX = cx - width * 0.38 + sweepP * (width * 0.76);
+                    const shimmer = ctx.createLinearGradient(sweepX - 70, 0, sweepX + 70, 0);
+                    shimmer.addColorStop(0, 'rgba(255,255,255,0)');
+                    shimmer.addColorStop(0.5, 'rgba(255,252,235,0.75)');
+                    shimmer.addColorStop(1, 'rgba(255,255,255,0)');
+                    ctx.shadowBlur = 0;
+                    ctx.shadowOffsetY = 0;
+                    ctx.fillStyle = shimmer;
+                    ctx.fillText('Durga Arts & Painting', cx, anchorY + slideY);
+                }
+
+                // Subtitle Tagline
+                const subProg = Math.min(1, Math.max(0, (t - (textStart + 0.7)) / 1.8));
+                if (subProg > 0) {
+                    const subEase = Ease.outQuart(subProg);
+                    ctx.globalAlpha = subEase * 0.92;
+                    ctx.shadowBlur = 10;
+                    ctx.font = `italic 400 ${subSize}px "Cormorant Garamond", serif`;
+                    ctx.fillStyle = '#f3e3be';
+                    // Spaced classical subtitle
+                    ctx.fillText('FINE ART  •  SACRED HERITAGE  •  BESPOKE CANVAS CREATIONS', cx, anchorY + mainSize * 0.68 + (1 - subEase) * 12);
+                }
+
+                ctx.restore();
+            }
+
+            /**
+             * Master Frame Renderer for timestamp `t` in [0, TOTAL_DURATION]
+             */
+            function renderScene(t, dt) {
+                // Smooth pointer interpolation
+                pointer.x += (pointer.targetX - pointer.x) * 0.06;
+                pointer.y += (pointer.targetY - pointer.y) * 0.06;
+
+                const parallaxX = (pointer.x - 0.5) * 18;
+                const parallaxY = (pointer.y - 0.5) * 18;
+                const cx = width * 0.5 + parallaxX * 0.4;
+                const cy = height * 0.5 + parallaxY * 0.4;
+
+                // Seamless loop fade-out / fade-in envelope in final 1.6 seconds
+                let loopFade = 1;
+                if (t > TOTAL_DURATION - 1.6) {
+                    loopFade = Math.max(0, (TOTAL_DURATION - t) / 1.6);
+                } else if (t < 0.7) {
+                    loopFade = Math.min(1, t / 0.7);
+                }
+
+                // 1. Rich Dark-Velvet Gallery Background (#0d090a)
+                ctx.fillStyle = PALETTE.bg;
+                ctx.fillRect(0, 0, width, height);
+
+                // Subtle warm radial velvet ambient glow
+                const bgGlow = ctx.createRadialGradient(cx, cy, minDim * 0.05, cx, cy, Math.max(width, height) * 0.75);
+                bgGlow.addColorStop(0, '#1c1215');
+                bgGlow.addColorStop(0.55, '#110b0d');
+                bgGlow.addColorStop(1, '#070405');
+                ctx.fillStyle = bgGlow;
+                ctx.fillRect(0, 0, width, height);
+
+                // 2. Soft Watercolor Blooms Radiating Outward
+                ctx.save();
+                ctx.globalCompositeOperation = 'screen';
+                for (let i = 0; i < watercolorBlooms.length; i++) {
+                    const b = watercolorBlooms[i];
+                    if (t < b.start) continue;
+                    const bp = Math.min(1, (t - b.start) / b.dur);
+                    const bEase = Ease.outQuart(bp);
+                    const currR = b.maxR * (0.25 + 0.75 * bEase);
+                    const bx = b.x + parallaxX * 0.7;
+                    const by = b.y + parallaxY * 0.7;
+
+                    const grad = ctx.createRadialGradient(bx, by, 0, bx, by, currR);
+                    grad.addColorStop(0, b.color);
+                    grad.addColorStop(0.6, b.color.replace(/[\d.]+\)$/, '0.05)'));
+                    grad.addColorStop(1, 'rgba(0,0,0,0)');
+
+                    ctx.fillStyle = grad;
+                    ctx.beginPath();
+                    ctx.arc(bx, by, currR, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                ctx.restore();
+
+                // 3. Fluid Impasto Oil Brushstrokes (drawn to offscreen buffer incrementally or rebuilt on scrub)
+                let needsRebuild = false;
+                for (let i = 0; i < brushStrokes.length; i++) {
+                    const st = brushStrokes[i];
+                    const targetProg = Math.min(1, Math.max(0, (t - st.start) / st.dur));
+                    if (targetProg < st.renderedProgress - 0.001) {
+                        needsRebuild = true;
+                        break;
+                    }
+                }
+
+                if (needsRebuild) {
+                    sCtx.clearRect(0, 0, width, height);
+                    for (let i = 0; i < brushStrokes.length; i++) {
+                        const st = brushStrokes[i];
+                        const targetProg = Math.min(1, Math.max(0, (t - st.start) / st.dur));
+                        st.renderedProgress = targetProg;
+                        if (targetProg > 0) {
+                            drawImpastoStroke(sCtx, st, targetProg);
+                        }
+                    }
+                } else {
+                    for (let i = 0; i < brushStrokes.length; i++) {
+                        const st = brushStrokes[i];
+                        const targetProg = Math.min(1, Math.max(0, (t - st.start) / st.dur));
+                        if (targetProg > st.renderedProgress + 0.0005) {
+                            // Redraw clean layer on buffer when active stroke advances
+                            sCtx.clearRect(0, 0, width, height);
+                            for (let j = 0; j < brushStrokes.length; j++) {
+                                const sj = brushStrokes[j];
+                                const pj = Math.min(1, Math.max(0, (t - sj.start) / sj.dur));
+                                sj.renderedProgress = pj;
+                                if (pj > 0) drawImpastoStroke(sCtx, sj, pj);
+                            }
+                            break;
+                        }
+                    }
+                }
+
+                // Composite impasto layer with subtle parallax
+                ctx.drawImage(strokeBuffer, parallaxX * 0.5, parallaxY * 0.5, width, height);
+
+                // Overlay fine woven linen canvas grain
+                if (grainPattern) {
+                    ctx.fillStyle = grainPattern;
+                    ctx.fillRect(0, 0, width, height);
+                }
+
+                // 4. Sacred Geometric Lotus Mandala + Trishul & Eye Motif
+                renderSacredMotif(t, cx, cy);
+
+                // 5. Floating 24K Gold-Leaf Dust Particles
+                renderGoldParticles(t, dt);
+
+                // 6. Luxury Calligraphic Title Reveal
+                renderTypographyReveal(t, cx, cy);
+
+                // 7. Cinematic Gallery Vignette & Seamless Loop Fade Curtain
+                const vig = ctx.createRadialGradient(width * 0.5, height * 0.5, minDim * 0.32, width * 0.5, height * 0.5, Math.max(width, height) * 0.78);
+                vig.addColorStop(0, 'rgba(13, 9, 10, 0)');
+                vig.addColorStop(1, 'rgba(6, 3, 4, 0.72)');
+                ctx.fillStyle = vig;
+                ctx.fillRect(0, 0, width, height);
+
+                if (loopFade < 1) {
+                    ctx.fillStyle = `rgba(13, 9, 10, ${1 - loopFade})`;
+                    ctx.fillRect(0, 0, width, height);
+                }
+
+                // Update timeline UI pill progress bar
+                progressBar.style.width = `${(t / TOTAL_DURATION) * 100}%`;
+            }
+
+            /**
+             * Main RequestAnimationFrame Loop
+             */
+            let isShowcaseVisible = true;
+            if ('IntersectionObserver' in window) {
+                const visibilityObserver = new IntersectionObserver((entries) => {
+                    isShowcaseVisible = !!entries[0].isIntersecting;
+                    lastTimestamp = null;
+                }, { threshold: 0.02 });
+                visibilityObserver.observe(host);
+            }
+
+            function animate(timestamp) {
+                if (!lastTimestamp) lastTimestamp = timestamp;
+                const dt = Math.min(0.05, (timestamp - lastTimestamp) / 1000);
+                lastTimestamp = timestamp;
+                if (!isShowcaseVisible || document.hidden) {
+                    requestAnimationFrame(animate);
+                    return;
+                }
+
+                if (isPlaying) {
+                    elapsedTime += dt;
+                    if (elapsedTime >= TOTAL_DURATION) {
+                        elapsedTime = elapsedTime % TOTAL_DURATION;
+                        // If recording a full 18s loop, stop automatically at loop completion
+                        if (isRecording && mediaRecorder && mediaRecorder.state === 'recording') {
+                            stopRecording();
+                        }
+                    }
+                }
+
+                renderScene(elapsedTime, dt);
+                requestAnimationFrame(animate);
+            }
+
+            /**
+             * Play / Pause Controls
+             */
+            function setPlayingState(play) {
+                isPlaying = play;
+                if (isPlaying) {
+                    playIcon.classList.add('hidden');
+                    pauseIcon.classList.remove('hidden');
+                } else {
+                    pauseIcon.classList.add('hidden');
+                    playIcon.classList.remove('hidden');
+                }
+            }
+
+            playPauseBtn.addEventListener('click', () => {
+                setPlayingState(!isPlaying);
+            });
+
+            replayBtn.addEventListener('click', () => {
+                elapsedTime = 0;
+                brushStrokes.forEach(s => s.renderedProgress = 0);
+                sCtx.clearRect(0, 0, width, height);
+                setPlayingState(true);
+            });
+
+            // Interactive Timeline Scrubbing
+            timelineContainer.addEventListener('click', (e) => {
+                const rect = timelineContainer.getBoundingClientRect();
+                const ratio = Math.min(1, Math.max(0, (e.clientX - rect.left) / rect.width));
+                elapsedTime = ratio * TOTAL_DURATION;
+                renderScene(elapsedTime, 0);
+            });
+
+            /**
+             * Record & Export 18-second Seamless Loop as WebM Video
+             */
+            function startRecording() {
+                if (typeof MediaRecorder === 'undefined' || !canvas.captureStream) {
+                    showToast('Video recording is not supported in this browser.', 4000);
+                    return;
+                }
+
+                try {
+                    recordedChunks = [];
+                    const stream = canvas.captureStream(60);
+                    const mimeTypes = [
+                        'video/webm;codecs=vp9',
+                        'video/webm;codecs=vp8',
+                        'video/webm'
+                    ];
+                    const selectedMime = mimeTypes.find(m => MediaRecorder.isTypeSupported(m)) || '';
+                    mediaRecorder = selectedMime
+                        ? new MediaRecorder(stream, { mimeType: selectedMime, videoBitsPerSecond: 8000000 })
+                        : new MediaRecorder(stream);
+
+                    mediaRecorder.ondataavailable = (event) => {
+                        if (event.data && event.data.size > 0) {
+                            recordedChunks.push(event.data);
+                        }
+                    };
+
+                    mediaRecorder.onstop = () => {
+                        const blob = new Blob(recordedChunks, { type: 'video/webm' });
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.style.display = 'none';
+                        a.href = url;
+                        a.download = 'Durga_Arts_And_Painting_Showcase.webm';
+                        document.body.appendChild(a);
+                        a.click();
+                        setTimeout(() => {
+                            document.body.removeChild(a);
+                            URL.revokeObjectURL(url);
+                        }, 200);
+                        showToast('WebM video exported successfully!', 3500);
+                    };
+
+                    // Reset timeline to 0:00 so exported video captures the full sequence cleanly
+                    elapsedTime = 0;
+                    brushStrokes.forEach(s => s.renderedProgress = 0);
+                    sCtx.clearRect(0, 0, width, height);
+                    setPlayingState(true);
+
+                    isRecording = true;
+                    recIndicator.classList.add('rec-dot');
+                    exportLabel.textContent = 'Recording 18s...';
+                    mediaRecorder.start();
+                    showToast('Recording full 18s showcase... Click again to stop early.', 4000);
+                } catch (err) {
+                    console.error(err);
+                    showToast('Unable to initialize WebM recorder.', 3500);
+                }
+            }
+
+            function stopRecording() {
+                isRecording = false;
+                recIndicator.classList.remove('rec-dot');
+                exportLabel.textContent = 'Export WebM';
+                if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                    mediaRecorder.stop();
+                }
+            }
+
+            exportBtn.addEventListener('click', () => {
+                if (isRecording) {
+                    stopRecording();
+                } else {
+                    startRecording();
+                }
+            });
+
+            // Mouse & Touch Parallax Listeners
+            host.addEventListener('mousemove', (e) => {
+                const rect = canvas.getBoundingClientRect();
+                pointer.targetX = Math.min(1, Math.max(0, (e.clientX - rect.left) / Math.max(1, rect.width)));
+                pointer.targetY = Math.min(1, Math.max(0, (e.clientY - rect.top) / Math.max(1, rect.height)));
+            }, { passive: true });
+
+            host.addEventListener('touchmove', (e) => {
+                if (e.touches && e.touches.length > 0) {
+                    const rect = canvas.getBoundingClientRect();
+                    pointer.targetX = Math.min(1, Math.max(0, (e.touches[0].clientX - rect.left) / Math.max(1, rect.width)));
+                    pointer.targetY = Math.min(1, Math.max(0, (e.touches[0].clientY - rect.top) / Math.max(1, rect.height)));
+                }
+            }, { passive: true });
+
+            window.addEventListener('resize', resize);
+            if ('ResizeObserver' in window) {
+                const sizeObserver = new ResizeObserver(resize);
+                sizeObserver.observe(host);
+            }
+
+            // Boot sequence
+            resize();
+            requestAnimationFrame(animate);
+        });
+    
+</script>
+
+
 
 <main id="main">
     <section class="hero" id="home"><div class="container hero-grid">
