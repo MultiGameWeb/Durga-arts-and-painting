@@ -246,6 +246,7 @@
         const categories = item.dataset.cat.split(" ");
         item.hidden = filter !== "all" && !categories.includes(filter);
       });
+      updateGalleryParallax();
     }));
 
 
@@ -421,6 +422,7 @@
         const height = Math.max(260,Math.floor(rect.height));
         renderer.setSize(width,height,false);
         camera.aspect = width/height;
+        camera.position.z = Math.max(10.6,7.55/(2*Math.tan(34*Math.PI/360)*camera.aspect)*1.04);
         camera.updateProjectionMatrix();
         renderer.render(scene,camera);
       }
@@ -467,6 +469,9 @@
         let brushAngle=0;
 
         if(t<2.8) {
+          leftEye.material.opacity=0;
+          rightEye.material.opacity=0;
+          smileGeometry.setDrawRange(0,0);
           const p=t/2.8;
           const angle=-Math.PI/2+p*Math.PI*2;
           const count=Math.min(ringDabs.length,Math.floor(p*ringDabs.length)+1);
