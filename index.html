@@ -59,6 +59,18 @@
     @media(max-width:720px){.paint-stage{grid-template-columns:1fr;gap:8px;padding:15px}.paint-copy{padding:13px 8px 4px}.paint-copy h3{font-size:36px}.paint-visual{min-height:290px}.paint-visual-label{font-size:8px}}
     @media(prefers-reduced-motion:reduce){.gallery-item img{transition:none!important;transform:none!important}.gallery-item:hover img{transform:none!important}}
 
+
+    /* 16:9 animated mural banner at the very top of the page */
+    .art-hero-wrap{padding:20px 0 0}
+    #art-hero-loop{position:relative;width:100%;aspect-ratio:16/9;height:auto;overflow:hidden;border-radius:24px;background:#FAF6F0;font-family:system-ui,sans-serif;box-shadow:0 20px 40px rgba(0,0,0,.08);isolation:isolate}
+    #artHeroCanvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+    .art-hero-shade{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(110deg,rgba(250,246,240,.2),rgba(250,246,240,0) 63%)}
+    .art-hero-copy{position:absolute;top:clamp(15px,3.2vw,34px);left:clamp(15px,3.2vw,34px);z-index:2;max-width:min(480px,72%);pointer-events:none}
+    .art-hero-copy h2{margin:0;color:#1c1917;font-family:Georgia,serif;font-size:clamp(1.35rem,3.55vw,2.65rem);font-weight:500;line-height:1.12;letter-spacing:-1.1px}
+    .art-hero-copy h2 span{color:#e11d48;font-style:italic}
+    .art-hero-tag{display:inline-block;margin-top:clamp(8px,1.5vw,14px);padding:7px 14px;border:1px solid rgba(255,255,255,.72);border-radius:999px;background:rgba(255,255,255,.88);backdrop-filter:blur(8px);box-shadow:0 4px 12px rgba(0,0,0,.05);color:#44403c;font-size:clamp(9px,1.15vw,13px);font-weight:700;line-height:1.35}
+    @media(max-width:600px){.art-hero-wrap{padding-top:12px}#art-hero-loop{border-radius:16px}.art-hero-copy{max-width:78%}.art-hero-copy h2{font-size:clamp(1.12rem,5.4vw,1.7rem);letter-spacing:-.5px}.art-hero-tag{padding:5px 9px;font-size:8px}}
+
   </style>
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"ProfessionalService","name":"Durga Arts & Paintings","telephone":"+918008157900","areaServed":{"@type":"City","name":"Hyderabad"},"description":"School wall murals, play school paintings, interior wall art and canvas paintings in Hyderabad.","url":"https://multigameweb.github.io/Durga-arts-and-painting/"}
@@ -75,6 +87,20 @@
     </div>
     <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation"><a href="#services">Services</a><a href="#work">Our Work</a><a href="#about">About</a><a href="#process">How We Work</a><a href="#contact">Contact</a><a class="btn primary" href="https://wa.me/918008157900?text=Hello%20Durga%20Arts%2C%20I%20would%20like%20to%20discuss%20a%20painting%20project." target="_blank" rel="noopener">Let's talk ↗</a></nav>
   </header>
+
+
+  <section class="art-hero-wrap" aria-label="Animated wall art introduction">
+    <div class="container">
+      <div id="art-hero-loop">
+        <canvas id="artHeroCanvas" role="img" aria-label="An animated mural illustration with colourful paint strokes, an arch, a lotus flower and a children's rainbow"></canvas>
+        <div class="art-hero-shade"></div>
+        <div class="art-hero-copy">
+          <h2>Bringing Blank Walls to <span>Living Art</span></h2>
+          <div class="art-hero-tag">Wall Painting • Design • Murals • Kids Drawing</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <main id="main">
     <section class="hero" id="home"><div class="container hero-grid">
@@ -542,5 +568,160 @@
     })();
 
   </script>
+
+  <script>
+  (function(){
+    const host = document.getElementById("art-hero-loop");
+    const canvas = document.getElementById("artHeroCanvas");
+    if (!host || !canvas || !canvas.getContext) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let w = 0, h = 0, elapsed = 0, last = 0, raf = 0, inView = true;
+    const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const clamp = value => Math.max(0, Math.min(1, value));
+    const ease = value => 1 - Math.pow(1 - value, 3);
+
+    function resize(){
+      const rect = host.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = Math.max(1, rect.width);
+      h = Math.max(1, rect.height);
+      canvas.width = Math.round(w * dpr);
+      canvas.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      drawFrame(reduceMotion ? 10.7 : elapsed);
+    }
+
+    function bezier(p0,p1,p2,p3,p,lw,col){
+      if (p <= 0) return;
+      ctx.save();
+      ctx.beginPath();
+      ctx.lineCap = "round";
+      ctx.lineWidth = lw;
+      ctx.strokeStyle = col;
+      ctx.moveTo(p0.x,p0.y);
+      const steps = Math.max(1,Math.ceil(40*p));
+      for(let i=1;i<=steps;i++){
+        const s = Math.min(p,i/40), u = 1-s;
+        const x = u*u*u*p0.x + 3*u*u*s*p1.x + 3*u*s*s*p2.x + s*s*s*p3.x;
+        const y = u*u*u*p0.y + 3*u*u*s*p1.y + 3*u*s*s*p2.y + s*s*s*p3.y;
+        ctx.lineTo(x,y);
+      }
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function drawFrame(t){
+      if (!w || !h) return;
+      const sc = Math.min(w,h);
+      ctx.clearRect(0,0,w,h);
+      ctx.fillStyle = "#FAF6F0";
+      ctx.fillRect(0,0,w,h);
+
+      const p1 = ease(clamp(t/1.5));
+      bezier({x:w*.2,y:h*.7},{x:w*.4,y:h*.2},{x:w*.7,y:h*.8},{x:w*.9,y:h*.35},p1,sc*.08,"rgba(244,63,94,.85)");
+
+      const p2 = ease(clamp((t-1.2)/1.5));
+      bezier({x:w*.25,y:h*.4},{x:w*.5,y:h*.75},{x:w*.75,y:h*.25},{x:w*.92,y:h*.6},p2,sc*.06,"rgba(245,158,11,.88)");
+
+      if(t>3){
+        const p3 = ease(clamp((t-3)/2));
+        ctx.save();
+        ctx.strokeStyle = "#1e293b";
+        ctx.lineWidth = Math.max(2,sc*.009);
+        ctx.beginPath();
+        ctx.arc(w*.75,h*.45,sc*.12*p3,Math.PI,0);
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      if(t>6){
+        const p4 = ease(clamp((t-6)/2.5));
+        ctx.save();
+        ctx.translate(w*.48,h*.65);
+        [-.7,-.35,0,.35,.7].forEach((a,i)=>{
+          ctx.save();
+          ctx.rotate(a*p4);
+          ctx.fillStyle = i%2 ? "#f43f5e" : "#fb7185";
+          ctx.beginPath();
+          ctx.ellipse(0,-sc*.07*p4,sc*.02*p4,sc*.07*p4,0,0,Math.PI*2);
+          ctx.fill();
+          ctx.restore();
+        });
+        ctx.restore();
+      }
+
+      if(t>9){
+        const p5 = ease(clamp((t-9)/2));
+        ["#ef4444","#f59e0b","#22c55e","#38bdf8"].forEach((col,i)=>{
+          ctx.save();
+          ctx.strokeStyle = col;
+          ctx.lineWidth = Math.max(2,sc*.012);
+          ctx.lineCap = "round";
+          ctx.beginPath();
+          ctx.arc(w*.24,h*.75,sc*(.13-i*.016),Math.PI,Math.PI+Math.PI*p5);
+          ctx.stroke();
+          ctx.restore();
+        });
+      }
+
+      if(t>11.1){
+        ctx.fillStyle = "rgba(250,246,240,"+clamp((t-11.1)/.9)+")";
+        ctx.fillRect(0,0,w,h);
+      }
+    }
+
+    function animate(ts){
+      raf = 0;
+      if(!last) last = ts;
+      const dt = Math.min((ts-last)/1000,.05);
+      last = ts;
+      if(inView && !document.hidden){
+        elapsed = (elapsed+dt)%12;
+        drawFrame(elapsed);
+      }
+      raf = requestAnimationFrame(animate);
+    }
+
+    function start(){
+      if(reduceMotion){
+        drawFrame(10.7);
+        return;
+      }
+      if(!raf){
+        last = 0;
+        raf = requestAnimationFrame(animate);
+      }
+    }
+    function stop(){
+      if(raf){cancelAnimationFrame(raf);raf=0;}
+      last=0;
+    }
+
+    if(typeof ResizeObserver !== "undefined"){
+      const observer = new ResizeObserver(resize);
+      observer.observe(host);
+    }else{
+      window.addEventListener("resize",resize,{passive:true});
+    }
+
+    if("IntersectionObserver" in window){
+      const visibilityObserver = new IntersectionObserver(entries=>{
+        inView = entries[0].isIntersecting;
+        if(inView) start(); else stop();
+      },{threshold:.01});
+      visibilityObserver.observe(host);
+    }
+    document.addEventListener("visibilitychange",()=>{
+      if(document.hidden) stop();
+      else if(inView) start();
+    });
+
+    resize();
+    start();
+  })();
+  </script>
+
 </body>
 </html>
