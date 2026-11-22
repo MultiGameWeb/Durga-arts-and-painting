@@ -60,17 +60,6 @@
     @media(prefers-reduced-motion:reduce){.gallery-item img{transition:none!important;transform:none!important}.gallery-item:hover img{transform:none!important}}
 
 
-    /* 16:9 animated mural banner at the very top of the page */
-    .art-hero-wrap{padding:20px 0 0}
-    #art-hero-loop{position:relative;width:100%;aspect-ratio:16/9;height:auto;overflow:hidden;border-radius:24px;background:#FAF6F0;font-family:system-ui,sans-serif;box-shadow:0 20px 40px rgba(0,0,0,.08);isolation:isolate}
-    #artHeroCanvas{position:absolute;inset:0;width:100%;height:100%;display:block}
-    .art-hero-shade{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(110deg,rgba(250,246,240,.2),rgba(250,246,240,0) 63%)}
-    .art-hero-copy{position:absolute;top:clamp(15px,3.2vw,34px);left:clamp(15px,3.2vw,34px);z-index:2;max-width:min(480px,72%);pointer-events:none}
-    .art-hero-copy h2{margin:0;color:#1c1917;font-family:Georgia,serif;font-size:clamp(1.35rem,3.55vw,2.65rem);font-weight:500;line-height:1.12;letter-spacing:-1.1px}
-    .art-hero-copy h2 span{color:#e11d48;font-style:italic}
-    .art-hero-tag{display:inline-block;margin-top:clamp(8px,1.5vw,14px);padding:7px 14px;border:1px solid rgba(255,255,255,.72);border-radius:999px;background:rgba(255,255,255,.88);backdrop-filter:blur(8px);box-shadow:0 4px 12px rgba(0,0,0,.05);color:#44403c;font-size:clamp(9px,1.15vw,13px);font-weight:700;line-height:1.35}
-    @media(max-width:600px){.art-hero-wrap{padding-top:12px}#art-hero-loop{border-radius:16px}.art-hero-copy{max-width:78%}.art-hero-copy h2{font-size:clamp(1.12rem,5.4vw,1.7rem);letter-spacing:-.5px}.art-hero-tag{padding:5px 9px;font-size:8px}}
-
   </style>
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"ProfessionalService","name":"Durga Arts & Paintings","telephone":"+918008157900","areaServed":{"@type":"City","name":"Hyderabad"},"description":"School wall murals, play school paintings, interior wall art and canvas paintings in Hyderabad.","url":"https://multigameweb.github.io/Durga-arts-and-painting/"}
@@ -109,12 +98,399 @@
         <div class="hero-actions"><a class="btn primary" href="https://wa.me/918008157900?text=Hello%20Durga%20Arts%2C%20I%20would%20like%20a%20quote%20for%20a%20painting%20project." target="_blank" rel="noopener">Get a free quote ↗</a><a class="btn outline" href="#work">Explore our work ↓</a></div>
         <div class="hero-note"><span><i class="dot"></i> Hyderabad, India</span><span><i class="dot"></i> 15+ years of experience</span></div>
       </div>
-      <div class="hero-art"><div class="hero-photo"><img src="https://raw.githubusercontent.com/MultiGameWeb/Durga-arts/main/img/mural-fruits-veg.jpg" alt="Colourful educational fruits and vegetables wall mural" fetchpriority="high"></div><div class="hero-sticker"><strong>15+</strong><span>Years of<br>experience</span></div><div class="hero-caption"><strong>Every wall tells a story.</strong><span>Let's create yours.</span></div></div>
-    </div></section>
+      <div class="hero-art"><div class="hero-photo"><img src="https://<!-- Animated Wall Art Hero Section for Durga Arts & Paintings -->
+<section id="durga-hero-anim" aria-label="Animated wall art introduction">
+  <style>
+    #durga-hero-anim {
+      position: relative;
+      width: 100%;
+      max-width: 1200px;
+      margin: 18px auto 0;
+      padding: 0 16px;
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    }
+    #durga-hero-anim .dha-frame {
+      position: relative;
+      width: 100%;
+      height: 440px;
+      border-radius: 22px;
+      overflow: hidden;
+      background: #1b1918;
+      box-shadow: 0 18px 42px rgba(27, 25, 24, 0.16);
+    }
+    #durga-hero-anim canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      cursor: crosshair;
+    }
+    #durga-hero-anim .dha-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(20, 18, 17, 0.12) 0%,
+        rgba(20, 18, 17, 0.35) 55%,
+        rgba(20, 18, 17, 0.82) 100%
+      );
+      pointer-events: none;
+    }
+    #durga-hero-anim .dha-content {
+      position: absolute;
+      left: 32px;
+      right: 32px;
+      bottom: 28px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+      pointer-events: none;
+      z-index: 2;
+    }
+    #durga-hero-anim .dha-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: rgba(255, 248, 240, 0.14);
+      backdrop-filter: blur(8px);
+      color: #fde68a;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    #durga-hero-anim .dha-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #f59e0b;
+      box-shadow: 0 0 8px #f59e0b;
+    }
+    #durga-hero-anim h2 {
+      margin: 0 0 6px;
+      color: #fffaf5;
+      font-size: clamp(1.5rem, 3.2vw, 2.35rem);
+      font-weight: 700;
+      line-height: 1.15;
+    }
+    #durga-hero-anim h2 span {
+      color: #fbbf24;
+    }
+    #durga-hero-anim .dha-sub {
+      color: rgba(255, 250, 245, 0.88);
+      font-size: clamp(0.85rem, 1.4vw, 1rem);
+      font-weight: 500;
+      letter-spacing: 0.03em;
+    }
+    #durga-hero-anim .dha-pills {
+      display: flex;
+      gap: 6px;
+      pointer-events: auto;
+    }
+    #durga-hero-anim .dha-pill {
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: rgba(24, 22, 21, 0.55);
+      backdrop-filter: blur(6px);
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 6px 11px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+    #durga-hero-anim .dha-pill.active,
+    #durga-hero-anim .dha-pill:hover {
+      background: #ea580c;
+      border-color: #ea580c;
+      color: #ffffff;
+    }
+    @media (max-width: 640px) {
+      #durga-hero-anim .dha-frame { height: 360px; border-radius: 16px; }
+      #durga-hero-anim .dha-content { left: 18px; right: 18px; bottom: 18px; }
+      #durga-hero-anim .dha-pills { display: none; }
+    }
+  </style>
 
-    <div class="trust"><div class="container trust-inner">
-      <div class="trust-item"><div class="trust-icon">✦</div><div><strong>15+ years</strong><span>Painting experience</span></div></div>
-      <div class="trust-item"><div class="trust-icon">⌂</div><div><strong>Hyderabad</strong><span>Local painting service</span></div></div>
+  <div class="dha-frame">
+    <canvas id="dhaCanvas" role="img" aria-label="Animated wall painting, arch design, lotus mural and kids rainbow illustration"></canvas>
+    <div class="dha-overlay"></div>
+    <div class="dha-content">
+      <div>
+        <div class="dha-badge"><span class="dha-dot"></span><span id="dhaActLabel">01 · Wall Painting</span></div>
+        <h2>Bringing Blank Walls to <span>Living Art</span></h2>
+        <div class="dha-sub">Wall Painting • Design • Murals • Kids Drawing</div>
+      </div>
+      <div class="dha-pills" id="dhaPills">
+        <button type="button" class="dha-pill active" data-act="0">Wall Painting</button>
+        <button type="button" class="dha-pill" data-act="1">Design</button>
+        <button type="button" class="dha-pill" data-act="2">Murals</button>
+        <button type="button" class="dha-pill" data-act="3">Kids Drawing</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const canvas = document.getElementById('dhaCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const actLabel = document.getElementById('dhaActLabel');
+      const pills = Array.from(document.querySelectorAll('#dhaPills .dha-pill'));
+
+      const ACT_NAMES = [
+        '01 · Wall Painting',
+        '02 · Interior Design',
+        '03 · Custom Murals',
+        '04 · Kids Drawing'
+      ];
+      const LOOP_MS = 16000;
+      const ACT_MS = 4000;
+      let startTime = performance.now();
+      let currentAct = -1;
+      const trail = [];
+
+      function resize() {
+        const rect = canvas.parentElement.getBoundingClientRect();
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = rect.width * dpr;
+        canvas.height = rect.height * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      window.addEventListener('resize', resize);
+      resize();
+
+      pills.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const idx = Number(btn.dataset.act);
+          startTime = performance.now() - idx * ACT_MS;
+        });
+      });
+
+      canvas.addEventListener('pointermove', (e) => {
+        const r = canvas.getBoundingClientRect();
+        const colors = ['#f97316', '#facc15', '#34d399', '#38bdf8', '#f472b6'];
+        trail.push({
+          x: e.clientX - r.left,
+          y: e.clientY - r.top,
+          r: 7 + Math.random() * 8,
+          c: colors[Math.floor(Math.random() * colors.length)],
+          a: 0.85
+        });
+        if (trail.length > 35) trail.shift();
+      });
+
+      const easeOut = (t) => 1 - Math.pow(1 - Math.min(Math.max(t, 0), 1), 3);
+
+      function drawWallPainting(w, h, p) {
+        ctx.fillStyle = '#f5efe6';
+        ctx.fillRect(0, 0, w, h);
+
+        // Subtle brick grid
+        ctx.strokeStyle = 'rgba(180, 160, 140, 0.22)';
+        ctx.lineWidth = 1;
+        for (let y = 30; y < h; y += 36) {
+          ctx.beginPath();
+          ctx.moveTo(0, y);
+          ctx.lineTo(w, y);
+          ctx.stroke();
+        }
+
+        // Terracotta & Teal roller bands
+        const bands = [
+          { y: h * 0.14, h: h * 0.24, c: '#ea580c', delay: 0.0 },
+          { y: h * 0.36, h: h * 0.24, c: '#0d9488', delay: 0.18 },
+          { y: h * 0.58, h: h * 0.26, c: '#f59e0b', delay: 0.36 }
+        ];
+
+        bands.forEach((b) => {
+          const prog = easeOut((p - b.delay) / 0.55);
+          if (prog <= 0) return;
+          const bw = w * prog;
+          ctx.fillStyle = b.c;
+          ctx.fillRect(0, b.y, bw, b.h);
+
+          // Paint roller head
+          if (prog < 0.99) {
+            ctx.fillStyle = '#292524';
+            ctx.fillRect(bw - 10, b.y - 6, 18, b.h + 12);
+            ctx.strokeStyle = '#78716c';
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            ctx.moveTo(bw + 8, b.y + b.h * 0.5);
+            ctx.lineTo(bw + 34, b.y + b.h * 0.85);
+            ctx.stroke();
+          }
+        });
+      }
+
+      function drawDesign(w, h, p) {
+        ctx.fillStyle = '#1f2421';
+        ctx.fillRect(0, 0, w, h);
+
+        const cx = w * 0.5;
+        const base = h * 0.78;
+        const arches = [
+          { r: Math.min(w, h) * 0.42, c: '#d97706', d: 0.0 },
+          { r: Math.min(w, h) * 0.31, c: '#059669', d: 0.15 },
+          { r: Math.min(w, h) * 0.20, c: '#fef3c7', d: 0.3 }
+        ];
+
+        arches.forEach((a) => {
+          const prog = easeOut((p - a.d) / 0.55);
+          if (prog <= 0) return;
+          ctx.fillStyle = a.c;
+          ctx.beginPath();
+          ctx.arc(cx, base - a.r * 0.45, a.r * prog, Math.PI, 0);
+          ctx.lineTo(cx + a.r * prog, base);
+          ctx.lineTo(cx - a.r * prog, base);
+          ctx.closePath();
+          ctx.fill();
+        });
+
+        // Sun circle
+        const sp = easeOut((p - 0.35) / 0.5);
+        if (sp > 0) {
+          ctx.fillStyle = '#f97316';
+          ctx.beginPath();
+          ctx.arc(cx, base - Math.min(w, h) * 0.22, 26 * sp, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      function drawMurals(w, h, p) {
+        const grad = ctx.createLinearGradient(0, 0, w, h);
+        grad.addColorStop(0, '#0f172a');
+        grad.addColorStop(1, '#1e293b');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, w, h);
+
+        // Decorative hills
+        const waveP = easeOut(p / 0.5);
+        ctx.fillStyle = '#0d9488';
+        ctx.beginPath();
+        ctx.moveTo(0, h);
+        ctx.quadraticCurveTo(w * 0.3, h * (0.45 + (1 - waveP) * 0.4), w * 0.65, h * 0.65);
+        ctx.quadraticCurveTo(w * 0.85, h * 0.75, w, h * 0.52);
+        ctx.lineTo(w, h);
+        ctx.fill();
+
+        // Blooming Lotus Mural in center
+        const cx = w * 0.5;
+        const cy = h * 0.52;
+        const petals = 9;
+        const lp = easeOut((p - 0.15) / 0.65);
+        for (let i = 0; i < petals; i++) {
+          const angle = -Math.PI / 2 + (i - (petals - 1) / 2) * 0.26 * lp;
+          ctx.save();
+          ctx.translate(cx, cy);
+          ctx.rotate(angle);
+          ctx.fillStyle = i % 2 === 0 ? '#f43f5e' : '#fb7185';
+          ctx.beginPath();
+          ctx.ellipse(0, -48 * lp, 16 * lp, 46 * lp, 0, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.restore();
+        }
+        ctx.fillStyle = '#facc15';
+        ctx.beginPath();
+        ctx.arc(cx, cy - 10, 14 * lp, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      function drawKidsDrawing(w, h, p) {
+        ctx.fillStyle = '#1e3a8a';
+        ctx.fillRect(0, 0, w, h);
+
+        // Rainbow arcs
+        const cx = w * 0.5;
+        const cy = h * 0.72;
+        const rainbow = ['#ef4444', '#f97316', '#facc15', '#22c55e', '#38bdf8'];
+        const rp = easeOut(p / 0.65);
+
+        rainbow.forEach((col, i) => {
+          ctx.strokeStyle = col;
+          ctx.lineWidth = 14;
+          ctx.lineCap = 'round';
+          ctx.beginPath();
+          ctx.arc(cx, cy, 150 - i * 16, Math.PI, Math.PI + Math.PI * rp);
+          ctx.stroke();
+        });
+
+        // Smiling sun
+        const sp = easeOut((p - 0.25) / 0.5);
+        if (sp > 0) {
+          const sx = w * 0.22;
+          const sy = h * 0.28;
+          ctx.fillStyle = '#fde047';
+          ctx.beginPath();
+          ctx.arc(sx, sy, 30 * sp, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        // Twinkling stars
+        const stars = [
+          [0.75, 0.22],
+          [0.83, 0.36],
+          [0.14, 0.52],
+          [0.68, 0.45]
+        ];
+        ctx.fillStyle = '#fef08a';
+        stars.forEach(([rx, ry], idx) => {
+          const s = Math.max(0, Math.sin((p * 6 + idx) * Math.PI)) * 6 + 3;
+          ctx.beginPath();
+          ctx.arc(w * rx, h * ry, s, 0, Math.PI * 2);
+          ctx.fill();
+        });
+      }
+
+      function render(now) {
+        const elapsed = (now - startTime) % LOOP_MS;
+        const act = Math.floor(elapsed / ACT_MS);
+        const progress = (elapsed % ACT_MS) / ACT_MS;
+
+        if (act !== currentAct) {
+          currentAct = act;
+          if (actLabel) actLabel.textContent = ACT_NAMES[act];
+          pills.forEach((btn, idx) => btn.classList.toggle('active', idx === act));
+        }
+
+        const w = canvas.clientWidth;
+        const h = canvas.clientHeight;
+        ctx.clearRect(0, 0, w, h);
+
+        if (act === 0) drawWallPainting(w, h, progress);
+        else if (act === 1) drawDesign(w, h, progress);
+        else if (act === 2) drawMurals(w, h, progress);
+        else drawKidsDrawing(w, h, progress);
+
+        // Interactive paint brush trail
+        for (let i = trail.length - 1; i >= 0; i--) {
+          const pt = trail[i];
+          ctx.globalAlpha = pt.a;
+          ctx.fillStyle = pt.c;
+          ctx.beginPath();
+          ctx.arc(pt.x, pt.y, pt.r, 0, Math.PI * 2);
+          ctx.fill();
+          pt.a -= 0.025;
+          pt.r *= 0.98;
+          if (pt.a <= 0) trail.splice(i, 1);
+        }
+        ctx.globalAlpha = 1;
+
+        requestAnimationFrame(render);
+      }
+
+      requestAnimationFrame(render);
+    })();
+  </script>
+</section>
+
+"trust-item"><div class="trust-icon">⌂</div><div><strong>Hyderabad</strong><span>Local painting service</span></div></div>
       <div class="trust-item"><div class="trust-icon">✎</div><div><strong>Made to order</strong><span>Ideas shaped around your space</span></div></div>
     </div></div>
 
@@ -569,362 +945,6 @@
 
   </script>
 
-  <script>
-  (function(){
-    const host = document.getElementById("art-hero-loop");
-    const canvas = document.getElementById("artHeroCanvas");
-    if (!host || !canvas || !canvas.getContext) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    let w = 0, h = 0, elapsed = 0, last = 0, raf = 0, inView = true;
-    const reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const clamp = value => Math.max(0,Math.min(1,value));
-    const ease = value => 1-Math.pow(1-value,3);
-    const mix = (a,b,p) => a+(b-a)*p;
-
-    function resize(){
-      const rect = host.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1,2);
-      w = Math.max(1,rect.width);
-      h = Math.max(1,rect.height);
-      canvas.width = Math.round(w*dpr);
-      canvas.height = Math.round(h*dpr);
-      ctx.setTransform(dpr,0,0,dpr,0,0);
-      drawFrame(reducedMotion ? 10.8 : elapsed);
-    }
-
-    function cubicPoint(a,b,c,d,p){
-      const u=1-p;
-      return {
-        x:u*u*u*a.x+3*u*u*p*b.x+3*u*p*p*c.x+p*p*p*d.x,
-        y:u*u*u*a.y+3*u*u*p*b.y+3*u*p*p*c.y+p*p*p*d.y
-      };
-    }
-    function cubicTangent(a,b,c,d,p){
-      const u=1-p;
-      const x=3*u*u*(b.x-a.x)+6*u*p*(c.x-b.x)+3*p*p*(d.x-c.x);
-      const y=3*u*u*(b.y-a.y)+6*u*p*(c.y-b.y)+3*p*p*(d.y-c.y);
-      return Math.atan2(y,x);
-    }
-    function drawCubic(a,b,c,d,p,width,color){
-      if(p<=0) return;
-      ctx.save();
-      ctx.lineCap="round";
-      ctx.lineJoin="round";
-      ctx.lineWidth=width+3;
-      ctx.strokeStyle="rgba(92,48,45,.12)";
-      ctx.shadowColor="rgba(65,41,35,.18)";
-      ctx.shadowBlur=7;
-      ctx.beginPath();
-      ctx.moveTo(a.x,a.y);
-      const steps=Math.max(2,Math.ceil(65*p));
-      for(let i=1;i<=steps;i++){
-        const pt=cubicPoint(a,b,c,d,Math.min(p,i/65));
-        ctx.lineTo(pt.x,pt.y);
-      }
-      ctx.stroke();
-      ctx.shadowBlur=0;
-      ctx.lineWidth=width;
-      ctx.strokeStyle=color;
-      ctx.stroke();
-      ctx.globalAlpha=.28;
-      ctx.lineWidth=Math.max(1,width*.16);
-      ctx.strokeStyle="#fff8e9";
-      ctx.stroke();
-      ctx.restore();
-      return {point:cubicPoint(a,b,c,d,p),angle:cubicTangent(a,b,c,d,p)};
-    }
-
-    function drawBrush(x,y,angle,scale,color,time){
-      const length=scale*.245;
-      const width=scale*.026;
-      ctx.save();
-      ctx.translate(x,y);
-      ctx.rotate(angle-Math.PI/2);
-      ctx.translate(0,Math.sin(time*8)*scale*.006);
-      ctx.shadowColor="rgba(48,34,24,.25)";
-      ctx.shadowBlur=scale*.018;
-      ctx.shadowOffsetY=scale*.012;
-
-      // Bristles, with the freshly dipped paint at the point.
-      ctx.beginPath();
-      ctx.moveTo(-width*.95,-length*.19);
-      ctx.quadraticCurveTo(-width*.75,-length*.08,0,scale*.012);
-      ctx.quadraticCurveTo(width*.75,-length*.08,width*.95,-length*.19);
-      ctx.closePath();
-      ctx.fillStyle=color;
-      ctx.fill();
-
-      // Golden ferrule.
-      ctx.beginPath();
-      ctx.moveTo(-width*1.2,-length*.2);
-      ctx.lineTo(width*1.2,-length*.2);
-      ctx.lineTo(width*.9,-length*.31);
-      ctx.lineTo(-width*.9,-length*.31);
-      ctx.closePath();
-      const metal=ctx.createLinearGradient(-width,0,width,0);
-      metal.addColorStop(0,"#9c7b43");
-      metal.addColorStop(.45,"#f4df9b");
-      metal.addColorStop(1,"#98713b");
-      ctx.fillStyle=metal;
-      ctx.fill();
-
-      // Warm wooden handle.
-      const wood=ctx.createLinearGradient(-width,0,width,0);
-      wood.addColorStop(0,"#713a24");
-      wood.addColorStop(.45,"#c7824c");
-      wood.addColorStop(1,"#753c24");
-      ctx.beginPath();
-      ctx.moveTo(-width*.78,-length*.3);
-      ctx.quadraticCurveTo(-width*.86,-length*.66,-width*.46,-length);
-      ctx.quadraticCurveTo(0,-length*1.035,width*.46,-length);
-      ctx.quadraticCurveTo(width*.86,-length*.66,width*.78,-length*.3);
-      ctx.closePath();
-      ctx.fillStyle=wood;
-      ctx.fill();
-      ctx.shadowColor="transparent";
-      ctx.strokeStyle="rgba(255,231,194,.55)";
-      ctx.lineWidth=Math.max(1,scale*.002);
-      ctx.beginPath();
-      ctx.moveTo(0,-length*.38);
-      ctx.lineTo(0,-length*.88);
-      ctx.stroke();
-
-      // Tiny wet-paint glint at the bristle tip.
-      ctx.beginPath();
-      ctx.arc(0,scale*.008,scale*.009,0,Math.PI*2);
-      ctx.fillStyle="#fff6dc";
-      ctx.fill();
-      ctx.restore();
-    }
-
-    function drawPetal(cx,cy,angle,progress,scale,color){
-      if(progress<=0) return;
-      const length=scale*.125*progress;
-      const spread=scale*.047*progress;
-      ctx.save();
-      ctx.translate(cx,cy);
-      ctx.rotate(angle);
-      ctx.shadowColor="rgba(114,39,58,.16)";
-      ctx.shadowBlur=scale*.012;
-      ctx.beginPath();
-      ctx.moveTo(0,0);
-      ctx.bezierCurveTo(-spread,-length*.38,-spread*.72,-length*.82,0,-length);
-      ctx.bezierCurveTo(spread*.72,-length*.82,spread,-length*.38,0,0);
-      const grad=ctx.createLinearGradient(0,0,0,-length);
-      grad.addColorStop(0,"#e94f74");
-      grad.addColorStop(1,color);
-      ctx.fillStyle=grad;
-      ctx.fill();
-      ctx.shadowBlur=0;
-      ctx.strokeStyle="rgba(255,235,225,.55)";
-      ctx.lineWidth=Math.max(1,scale*.0025);
-      ctx.stroke();
-      ctx.restore();
-      return {x:cx+Math.sin(angle)*length*.86,y:cy-Math.cos(angle)*length*.86,angle:angle-Math.PI/2};
-    }
-
-    function drawRainbowArc(cx,cy,radius,progress,color,width){
-      if(progress<=0) return null;
-      const angle=Math.PI+Math.PI*progress;
-      ctx.save();
-      ctx.lineCap="round";
-      ctx.lineWidth=width+2;
-      ctx.strokeStyle="rgba(82,62,42,.10)";
-      ctx.beginPath();
-      ctx.arc(cx,cy,radius,Math.PI,angle,false);
-      ctx.stroke();
-      ctx.lineWidth=width;
-      ctx.strokeStyle=color;
-      ctx.beginPath();
-      ctx.arc(cx,cy,radius,Math.PI,angle,false);
-      ctx.stroke();
-      ctx.restore();
-      return {x:cx+Math.cos(angle)*radius,y:cy+Math.sin(angle)*radius,angle:angle+Math.PI/2};
-    }
-
-    function drawBackdrop(sc){
-      ctx.fillStyle="#FAF6F0";
-      ctx.fillRect(0,0,w,h);
-      const wash=ctx.createRadialGradient(w*.76,h*.52,sc*.025,w*.76,h*.52,sc*.72);
-      wash.addColorStop(0,"rgba(255,255,255,.62)");
-      wash.addColorStop(1,"rgba(250,246,240,0)");
-      ctx.fillStyle=wash;
-      ctx.fillRect(0,0,w,h);
-
-      // Soft paper-like decoration, kept away from the headline.
-      ctx.save();
-      ctx.globalAlpha=.25;
-      for(let i=0;i<8;i++){
-        const x=w*(.53+(i%4)*.105);
-        const y=h*(.17+Math.floor(i/4)*.66);
-        ctx.beginPath();
-        ctx.arc(x,y,sc*.006,0,Math.PI*2);
-        ctx.fillStyle=i%2?"#e6b2a2":"#d5b979";
-        ctx.fill();
-      }
-      ctx.restore();
-    }
-
-    function drawFrame(t){
-      if(!w||!h) return;
-      const sc=Math.min(w,h);
-      drawBackdrop(sc);
-      const stageBrush=null;
-
-      // Two flowing mural strokes. The brush follows the wet edge of each stroke.
-      const a1={x:w*.43,y:h*.69}, b1={x:w*.54,y:h*.16}, c1={x:w*.76,y:h*.88}, d1={x:w*.94,y:h*.34};
-      const p1=ease(clamp(t/1.8));
-      const stroke1=drawCubic(a1,b1,c1,d1,p1,sc*.075,"#ef5574");
-
-      const a2={x:w*.49,y:h*.43}, b2={x:w*.62,y:h*.78}, c2={x:w*.81,y:h*.22}, d2={x:w*.96,y:h*.59};
-      const p2=ease(clamp((t-1.55)/1.75));
-      const stroke2=drawCubic(a2,b2,c2,d2,p2,sc*.055,"#f0a52f");
-
-      let activeBrush=null;
-      let activeColor="#ef5574";
-      if(t<1.55&&stroke1){activeBrush=stroke1;activeColor="#ef5574";}
-      else if(t<3.3&&stroke2){activeBrush=stroke2;activeColor="#f0a52f";}
-
-      // Architectural arch, painted from one side to the other.
-      if(t>3){
-        const p3=ease(clamp((t-3)/1.7));
-        const cx=w*.79, cy=h*.48, radius=sc*.135;
-        const angle=Math.PI+Math.PI*p3;
-        ctx.save();
-        ctx.lineCap="round";
-        ctx.lineWidth=sc*.012;
-        ctx.strokeStyle="rgba(30,41,59,.12)";
-        ctx.beginPath();
-        ctx.arc(cx,cy,radius,Math.PI,angle,false);
-        ctx.stroke();
-        ctx.strokeStyle="#26384d";
-        ctx.lineWidth=sc*.008;
-        ctx.beginPath();
-        ctx.arc(cx,cy,radius,Math.PI,angle,false);
-        ctx.stroke();
-        ctx.restore();
-        if(t<4.85) activeBrush={point:{x:cx+Math.cos(angle)*radius,y:cy+Math.sin(angle)*radius},angle:angle+Math.PI/2};
-        activeColor="#26384d";
-      }
-
-      // Lotus blooms petal by petal while the brush traces the opening petals.
-      const lotusStart=4.75;
-      const lotusX=w*.75, lotusY=h*.76;
-      const petalAngles=[-1.12,-.57,0,.57,1.12];
-      if(t>lotusStart){
-        let currentPetal=null;
-        petalAngles.forEach((angle,i)=>{
-          const progress=ease(clamp((t-lotusStart-i*.32)/.78));
-          const petal=drawPetal(lotusX,lotusY,angle,progress,sc,i%2?"#fb7892":"#ec5275");
-          if(progress>0&&progress<1) currentPetal=petal;
-        });
-        if(t<7.95&&currentPetal){
-          activeBrush={point:{x:currentPetal.x,y:currentPetal.y},angle:currentPetal.angle};
-          activeColor="#ed5275";
-        }
-        // Small centre dot appears once the flower has opened.
-        const bloom=ease(clamp((t-6.55)/.6));
-        if(bloom>0){
-          ctx.beginPath();
-          ctx.arc(lotusX,lotusY,sc*.017*bloom,0,Math.PI*2);
-          ctx.fillStyle="#e9ad36";
-          ctx.fill();
-        }
-      }
-
-      // Children's rainbow: four coloured arcs painted one after another.
-      const rainbowStart=7.75;
-      const rainbowX=w*.59, rainbowY=h*.88, rainbowR=sc*.16;
-      const rainbowColors=["#ef4444","#f59e0b","#22a06b","#38a7db"];
-      rainbowColors.forEach((color,i)=>{
-        const progress=ease(clamp((t-rainbowStart-i*.55)/.68));
-        const radius=rainbowR-i*sc*.019;
-        const tip=drawRainbowArc(rainbowX,rainbowY,radius,progress,color,sc*.009);
-        if(t>=rainbowStart+i*.55&&t<rainbowStart+(i+1)*.55+.68&&tip){
-          activeBrush={point:tip,angle:tip.angle};
-          activeColor=color;
-        }
-      });
-
-      // Lift the brush away and let the finished artwork breathe before looping.
-      if(t>=10.65){
-        const lift=clamp((t-10.65)/.55);
-        activeBrush={point:{x:mix(w*.76,w*.96,lift),y:mix(h*.65,h*.18,lift)},angle:-.65};
-        activeColor="#ef5574";
-        const pulse=.5+.5*Math.sin((t-10.65)*8);
-        ctx.save();
-        ctx.globalAlpha=lift*pulse*.7;
-        [[.86,.25],[.94,.72],[.68,.18],[.52,.83]].forEach(([x,y],i)=>{
-          ctx.beginPath();
-          ctx.arc(w*x,h*y,sc*(.004+i*.001),0,Math.PI*2);
-          ctx.fillStyle=i%2?"#eaa63b":"#ef7890";
-          ctx.fill();
-        });
-        ctx.restore();
-      }
-
-      if(activeBrush&&activeBrush.point){
-        drawBrush(activeBrush.point.x,activeBrush.point.y,activeBrush.angle,sc,activeColor,t);
-      }
-
-      if(t>11.35){
-        const fade=clamp((t-11.35)/.65);
-        ctx.fillStyle="rgba(250,246,240,"+fade+")";
-        ctx.fillRect(0,0,w,h);
-      }
-    }
-
-    function animate(ts){
-      raf=0;
-      if(!last) last=ts;
-      const dt=Math.min((ts-last)/1000,.05);
-      last=ts;
-      if(inView&&!document.hidden){
-        elapsed=(elapsed+dt)%12;
-        drawFrame(elapsed);
-      }
-      raf=requestAnimationFrame(animate);
-    }
-
-    function start(){
-      if(reducedMotion){
-        drawFrame(10.8);
-        return;
-      }
-      if(!raf){
-        last=0;
-        raf=requestAnimationFrame(animate);
-      }
-    }
-    function stop(){
-      if(raf){cancelAnimationFrame(raf);raf=0;}
-      last=0;
-    }
-
-    if(typeof ResizeObserver!=="undefined"){
-      const observer=new ResizeObserver(resize);
-      observer.observe(host);
-    }else{
-      window.addEventListener("resize",resize,{passive:true});
-    }
-    if("IntersectionObserver" in window){
-      const visibilityObserver=new IntersectionObserver(entries=>{
-        inView=entries[0].isIntersecting;
-        if(inView) start(); else stop();
-      },{threshold:.01});
-      visibilityObserver.observe(host);
-    }
-    document.addEventListener("visibilitychange",()=>{
-      if(document.hidden) stop();
-      else if(inView) start();
-    });
-
-    resize();
-    start();
-  })();
-  </script>
 
 </body>
 </html>
